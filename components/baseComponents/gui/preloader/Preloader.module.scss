@@ -1,0 +1,130 @@
+@use "sass:list";
+@use "sass:color";
+/**
+  https://cssloaders.github.io/
+  https://loading.io/spinner/
+ */
+
+$WHITE: #ffffff;
+$RED: #ff0000;
+$TABLET: 768px;
+@mixin MOBILE() {
+  @media screen and (max-width: calc($TABLET - 1px)) {
+    @content;
+  }
+}
+
+@keyframes cube-loader {
+  0%,
+  10% {
+    transform: perspective(136px) rotateX(-180deg);
+    opacity: 0;
+  }
+  25%,
+  75% {
+    transform: perspective(136px) rotateX(0deg);
+    opacity: 1;
+  }
+  90%,
+  100% {
+    transform: perspective(136px) rotateY(180deg);
+    opacity: 0;
+  }
+}
+
+body:global(._preloader) {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  display: block !important;
+  #__next {
+    overflow-y: auto;
+    height: 100vh;
+  }
+}
+
+.preloader {
+  // Константы
+  @mixin mod($mod) {
+    @include modifier("preloader", $mod) {
+      @content;
+    }
+  }
+
+  position: fixed;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+
+  display: flex;
+  overflow: hidden;
+  background-color: $WHITE;
+
+  &__progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform-origin: 0 0;
+    width: 100%;
+    height: 4vh;
+    background-color: $RED;
+    transform: scaleX(0);
+  }
+
+  &__block {
+    position: relative;
+    font-size: 8.2vh;
+    width: 1em;
+    height: 1em;
+
+    @include MOBILE {
+      font-size: 15vw;
+    }
+
+    > * {
+      will-change: transform;
+      position: relative;
+      width: 50%;
+      height: 50%;
+      margin: 0;
+      float: left;
+      transform: scale(1);
+
+      $duration: 2.76s;
+      $delay: $duration * 0.5 * 0.25;
+      $color: #e72b2c; // #FCAF17;
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: cube-loader $duration infinite linear both;
+        transform-origin: 100% 100%;
+      }
+
+      $list: 0, 1, 3, 2;
+      @for $i from 1 through list.length($list) {
+        $v: list.nth($list, $i);
+        &:nth-child(#{$i}) {
+          transform: scale(1) rotateZ(#{90deg * $v});
+          &::before {
+            animation-delay: $delay * $v;
+            background-color: color.adjust($color, $lightness: 8% * (1 - $v));
+          }
+        }
+      }
+    }
+  }
+}

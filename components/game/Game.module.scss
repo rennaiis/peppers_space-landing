@@ -1,0 +1,16 @@
+@use "@styles/base" as *;
+
+.game {
+  @mixin mod($mod) {
+    @include modifier("game", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .game_#{$mod} & {
+        @content;
+      }
+    }
+  }
+}

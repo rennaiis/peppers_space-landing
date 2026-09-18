@@ -1,0 +1,39 @@
+@use "@styles/base" as *;
+
+.sectionAnchor {
+  @mixin mod($mod) {
+    @include modifier("section-anchor", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .section-anchor_#{$mod} & {
+        @content;
+      }
+    }
+  }
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  @include options(
+    (
+      --offset: (
+        -67px,
+        -80px,
+        -160px,
+      ),
+      --height: (
+        67px,
+        80px,
+        160px,
+      ),
+    )
+  );
+
+  top: var(--offset);
+  height: var(--height);
+  background: none;
+  pointer-events: none;
+}

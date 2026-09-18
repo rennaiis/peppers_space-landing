@@ -1,0 +1,75 @@
+@use "@styles/base" as *;
+
+.paginationPages {
+  @mixin mod($mod) {
+    @include modifier("paginationPages", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .paginationPages_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  &__list {
+    display: flex;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 1em;
+
+    h3 {
+      margin: 0;
+    }
+  }
+
+  .break,
+  &__item,
+  &__button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    background: #ff000080;
+    user-select: none;
+    font-size: 20px;
+    margin: 0 2px;
+    transition: 0.3s ease-in-out;
+  }
+
+  .break a,
+  &__button a,
+  &__item a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__item_active {
+    background: $RED;
+    color: $WHITE;
+  }
+
+  &__button.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &__button:hover {
+    color: $WHITE;
+  }
+
+  &__button:active {
+    transform: scale(0.8);
+  }
+}

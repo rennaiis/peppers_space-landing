@@ -1,0 +1,34 @@
+@use "@styles/base" as *;
+
+.people {
+  @mixin mod($mod) {
+    @include modifier("people", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .people_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  width: 100%;
+  text-align: center;
+  background-color: $TEXT;
+
+  &__image {
+    max-width: 100%;
+    @include options(
+      (
+        width: (
+          1440px,
+          402px,
+          1024px,
+        ),
+        margin: 0 auto,
+      )
+    );
+  }
+}

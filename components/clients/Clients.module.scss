@@ -1,0 +1,307 @@
+@use "@styles/base" as *;
+
+.clients {
+  @mixin mod($mod) {
+    @include modifier("clients", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .clients_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: $TEXT;
+  overflow: hidden;
+
+  &__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    @include options(
+      (
+        width: (
+          $DESIGN-W,
+          $DESIGN-W-M,
+          $DESIGN-W-T,
+        ),
+        height: (
+          858px,
+          744px,
+          1442px,
+        ),
+        padding: (
+          100px 68px 104px,
+          100px 28px,
+          150px 75px 182px,
+        ),
+      )
+    );
+    max-width: 100%;
+    margin: auto;
+    box-sizing: border-box;
+    text-align: left;
+
+    &:before,
+    &:after {
+      position: absolute;
+      content: "";
+      @include options(
+        (
+          width: (
+            auto,
+            123px,
+            312px,
+          ),
+          height: (
+            219px,
+            auto,
+            auto,
+          ),
+        )
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    &:before {
+      top: 0;
+      left: 0;
+
+      background: linear-gradient(to bottom, #041433 0%, rgba(4, 20, 51, 0) 100%);
+    }
+
+    &:after {
+      bottom: 0;
+      right: 0;
+      background: linear-gradient(to top, #041433 0%, rgba(4, 20, 51, 0) 100%);
+    }
+
+    @include DESKTOP {
+      &:before,
+      &:after {
+        width: 100%;
+      }
+    }
+
+    @include DESKTOP-BIG {
+      &:before,
+      &:after {
+        width: 100%;
+      }
+    }
+
+    @include NOT-DESK {
+      &:before,
+      &:after {
+        height: 100%;
+      }
+      &:before {
+        background: linear-gradient(to right, #041433 0%, rgba(4, 20, 51, 0) 100%);
+      }
+
+      &:after {
+        background: linear-gradient(to left, #041433 0%, rgba(4, 20, 51, 0) 100%);
+      }
+    }
+  }
+
+  &__title {
+    width: 100%;
+    text-align: left;
+    font-family: $TITLE-FONT;
+    @include options(
+      (
+        font-size: (
+          48px,
+          24px,
+          60px,
+        ),
+        margin: (
+          0 0 70px 0,
+          0 0 25px 0,
+          0 0 60px 0,
+        ),
+      )
+    );
+    line-height: 1.2;
+    white-space: pre-line;
+    color: $WHITE;
+    font-weight: 700;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 2;
+
+    img {
+      display: inline-block;
+      vertical-align: bottom;
+      @include options(
+        (
+          height: (
+            65px,
+            34px,
+            79px,
+          ),
+          margin: (
+            0 0 5px,
+            0 0 4px,
+            0 0 8px,
+          ),
+        )
+      );
+    }
+  }
+
+  &__gallery {
+    position: absolute;
+    display: inline-block;
+    white-space: nowrap;
+    @include options(
+      (
+        width: (
+          192px,
+          auto,
+          auto,
+        ),
+        height: (
+          auto,
+          70px,
+          177px,
+        ),
+      )
+    );
+    overflow: hidden;
+
+    &_1 {
+      @include options(
+        (
+          top: (
+            0,
+            145px,
+            245px,
+          ),
+          right: (
+            422px,
+            0,
+            0,
+          ),
+          bottom: (
+            0,
+            145px,
+            245px,
+          ),
+        )
+      );
+    }
+
+    &_2 {
+      @include options(
+        (
+          top: (
+            0,
+            auto,
+            auto,
+          ),
+          bottom: (
+            0,
+            145px,
+            245px,
+          ),
+          right: (
+            100px,
+            0,
+            0,
+          ),
+        )
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      @include NOT-DESK {
+        flex-direction: row;
+      }
+    }
+
+    @include DESKTOP-BIG {
+      height: 100%;
+    }
+    @include NOT-DESK {
+      width: 100%;
+    }
+  }
+
+  &__galleryBlock {
+    width: 100%;
+    height: auto;
+    animation: line-vert-rev 100s linear infinite;
+
+    &_2 {
+      animation-name: line-vert;
+    }
+
+    @include DESKTOP-BIG {
+      width: 100%;
+      height: auto;
+    }
+    @include NOT-DESK {
+      display: inline-block;
+      width: auto;
+      height: 100%;
+      animation-name: line;
+
+      &_2 {
+        animation-name: line-rev;
+      }
+    }
+  }
+
+  &__galleryLine {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    @include option(grid-gap, 40px, 20px, 20px);
+    @include DESKTOP-BIG {
+      width: 100%;
+      height: auto;
+    }
+    @include NOT-DESK {
+      flex-direction: row;
+      width: auto;
+      height: 100%;
+      white-space: nowrap;
+    }
+  }
+
+  &__item {
+    width: 100%;
+    @include option(width, auto, 153px, 385px);
+
+    @include NOT-DESK {
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+  }
+
+  &__itemImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &__button {
+    z-index: 2;
+    @include option(font-size, 14px, 13px, 17px);
+  }
+}

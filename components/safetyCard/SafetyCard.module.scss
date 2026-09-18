@@ -1,0 +1,99 @@
+@use "@styles/base" as *;
+
+.safetyCard {
+  
+  display: flex;
+  flex-direction: column;
+  @include options((
+    border-radius: (7px, 7px),
+    padding: (24px, 24px)
+  ));
+  &__icons{
+    display: flex;
+    flex-direction: row;
+    @include options((
+      gap: (20px, 30px),
+      height: (14px, 21px)
+    ));
+    img{
+      height: 100%;
+    }
+  }
+  &__head{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    
+  }
+
+  &_safety{
+    @include options((
+      width: (245px, 278px),
+      height: (211px, 288px),
+      padding: (10px 8px 16px 18px, 16px 20px 46px 20px),
+      margin-top: (10px, 0px),
+      gap: (6px, 6px)
+    ));
+    background-color: $WHITE;
+    .safetyCard__title{
+      @extend %CARD-TITLE;
+    }
+    .safetyCard__text{
+      @include option(max-width, 224px, 500px);
+      @extend %CARD-TEXT;
+    }
+    .safetyCard__icon{
+      @include option (width, 48px, 56px);
+      @include option (height, 48px, 72px);
+      &_2{
+        @include option (width, 30px, 56x);
+      }
+      &_4{
+        @include option (width, 80px, 56px);
+      }
+    }
+    .safetyCard__iconsItem{
+      margin-bottom: auto;
+      @include option (height, 14px, 23px);
+      @include option (width, 47px, 78px);
+    }
+    .safetyCard__icons{
+      margin-top: auto;
+      display: flex;
+      @include option(gap, 5px, 0px);
+      @include NOT-DESKTOP{
+        justify-content: space-between;
+      }
+    }
+  }
+  &_app{
+    @include options((
+      padding: (30px 80px 10px 25px, 10px 5px 2px 20px),
+      gap: (10px, 10px)
+    ));
+    background-color: $LIGHT-GREY;
+    box-shadow: vw(3.26px) vw(3.26px) vw(6.51px) #E5A27C66;
+    .safetyCard__text{
+      @extend %CARD-LIGHT-TEXT;
+    }
+    .safetyCard__head{
+      img{
+        @include option (height, 55px, 55px)
+      }
+    }
+  }
+
+  @mixin mod($mod) {
+    @include modifier("safetyCard", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .safetyCard_#{$mod} & {
+        @content;
+      }
+    }
+  }
+}

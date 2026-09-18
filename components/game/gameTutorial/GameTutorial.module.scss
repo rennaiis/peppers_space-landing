@@ -1,0 +1,156 @@
+@use "@styles/base" as *;
+
+.gameTutorial {
+  @mixin mod($mod) {
+    @include modifier("gameTutorial", $mod) {
+      @content;
+    }
+  }
+  @mixin item($mod) {
+    @include modifier("gameTutorial__item", $mod) {
+      @content;
+    }
+  }
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  @include option2(padding, 65px 15px 67px);
+  overflow: hidden;
+  box-sizing: border-box;
+
+  &__image {
+    position: relative;
+    width: 100%;
+    @include option2(margin, 88px auto 0);
+    @include option2(height, 300px);
+  }
+
+  &__imageImg {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+
+  :global(.swiper-slide-active) {
+    --item-image-opacity: 1;
+    --item-image-transform: scale(1);
+    --item-text-opacity: 1;
+    --item-text-transform: translateY(0%);
+  }
+
+  &__carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    @include option2(margin, 60px auto 0);
+
+    :global(.swiper) & {
+      width: 100%;
+      height: 100%;
+    }
+
+    :global(.swiper-slide) & {
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.15s;
+    }
+
+    :global(.swiper-slide-active) & {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  &__item {
+    @include option2(width, 372px);
+    height: 100%;
+    @include option2(padding, 20px 20px 80px);
+    @include option2(border-radius, 10px);
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #e3e3e3;
+  }
+
+  &__itemImage {
+    position: relative;
+    @include option2(width, 332px);
+    @include option2(height, 330px);
+    @include option2(margin, 0 auto 20px);
+    opacity: var(--item-image-opacity, 0);
+    transform: var(--item-image-transform, scale(0.4));
+    transition:
+      opacity 0.3s $B-EASE 0.2s,
+      transform 0.3s $B-EASE 0.2s;
+  }
+
+  &__itemImageImg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+  }
+
+  &__itemText {
+    @include option2(margin, 0 auto);
+    white-space: pre-line;
+    @include option2(font-size, 14px);
+    line-height: 1;
+    color: $BLACK;
+    font-weight: 300;
+    transform: var(--item-text-transform, translateY(25%));
+    opacity: var(--item-text-opacity, 0);
+    transition:
+      opacity 0.3s $B-EASE 0.3s,
+      transform 0.3s $B-EASE 0.3s;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    @include option2(bottom, -25px);
+    left: 0;
+    width: 100%;
+    @include option2(margin, 0 auto 0);
+    z-index: 1;
+  }
+
+  &__pagination {
+    position: absolute;
+    @include option2(bottom, 50px);
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    @include option2(margin, 0 auto 22px);
+
+    :global(.swiper-pagination-bullet) & {
+      position: relative;
+      @include option2(font-size, 6px);
+      width: 1em;
+      height: 1em;
+      @include option2(margin, 0 6px);
+      background-color: #b9b9b9;
+      border-radius: 50%;
+      border: none;
+      transition:
+        transform 0.3s ease-in-out,
+        background-color 0.3s ease-in-out;
+    }
+
+    :global(.swiper-pagination-bullet-active) & {
+      background-color: #8c8c8c;
+      transform: scale(1.33);
+    }
+  }
+}

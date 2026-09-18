@@ -1,0 +1,1015 @@
+@use "@styles/base" as *;
+
+@property --base-color {
+  inherits: true;
+  initial-value: #{$TEXT};
+  syntax: "<color>";
+}
+
+@property --base-circle-color {
+  initial-value: transparent;
+  syntax: "<color>";
+  inherits: true;
+}
+
+.form {
+  @mixin mod($mod) {
+    @include modifier("form", $mod) {
+      @content;
+    }
+  }
+  @mixin item($mod) {
+    @include modifier("form__item", $mod) {
+      @content;
+    }
+  }
+  @mixin point($mod) {
+    @include modifier("form__point", $mod) {
+      @content;
+    }
+  }
+  @mixin input($mod) {
+    @include modifier("form__input", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .form_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  position: relative;
+  @include options(
+    (
+      width: (
+        $DESIGN-W,
+        $DESIGN-W-M,
+        $DESIGN-W-T,
+      ),
+      height: (
+        848px,
+        821px,
+        1237px,
+      ),
+      padding: (
+        100px 75px,
+        100px 29px,
+        100px 77px,
+      ),
+    )
+  );
+  margin: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  &__title {
+    @extend %TITLE;
+    @include option(margin, 0 0 80px, 0 0 31.5px, 0 0 60px);
+    white-space: pre-line;
+  }
+
+  &__blockNavigation {
+    @include options(
+      (
+        bottom: (
+          145px,
+          108px,
+          152px,
+        ),
+        left: (
+          75px,
+          29px,
+          81px,
+        ),
+        width: (
+          164px,
+          130px,
+          180px,
+        ),
+      )
+    );
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    transition: width 0.3s 0.3s;
+    z-index: 2;
+
+    @include mod("4") {
+      @include option(width, 321px, 259px, 360px);
+      transition-delay: 0s;
+    }
+  }
+
+  &__block {
+    width: 100%;
+    @include option(width, 940px, auto, auto);
+
+    :global(.swiper) {
+      @include option(padding, 0 0 20px);
+    }
+
+    :global(.swiper-slide) {
+      width: 100%;
+      @include option(margin, 0 10px 0 0);
+      pointer-events: none;
+      opacity: 0 !important;
+      transition: opacity 0.3s;
+
+      &:last-child {
+        @include option(margin, 0);
+      }
+    }
+
+    :global(.swiper-slide-active) {
+      pointer-events: auto;
+      opacity: 1 !important;
+    }
+  }
+
+  &__item {
+    width: 100%;
+  }
+
+  &__itemTitle {
+    width: 100%;
+    font-family: $TITLE-FONT;
+    @include options(
+      (
+        margin: (
+          0 0 25px,
+          0 0 19px,
+          0 0 57px,
+        ),
+        font-size: (
+          32px,
+          18px,
+          30px,
+        ),
+      )
+    );
+    line-height: 1.2;
+    text-transform: uppercase;
+    text-align: left;
+    font-weight: 700;
+  }
+
+  &__navigation {
+    position: absolute;
+    @include options-desk(
+      (
+        top: 289px,
+        right: 198px,
+        width: 147px,
+      )
+    );
+
+    @include option(margin, 0, 0 auto 50px, 0 auto 80px);
+
+    @include NOT-DESK {
+      position: relative;
+      top: auto;
+      right: auto;
+      width: auto;
+    }
+  }
+
+  &__navigationTitle {
+    @include options-desk(
+      (
+        font-size: 20px,
+        margin: 0 0 31px,
+      )
+    );
+    font-weight: 700;
+    text-transform: uppercase;
+
+    @include NOT-DESK {
+      display: none;
+    }
+  }
+
+  &__navigationBlock {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    @include options(
+      (
+        width: (
+          auto,
+          342px,
+          864px,
+        ),
+        padding: (
+          22px 0,
+          0,
+          0,
+        ),
+        grid-gap: (
+          50px,
+          0,
+          0,
+        ),
+      )
+    );
+
+    &:before {
+      position: absolute;
+      content: "";
+      @include options(
+        (
+          top: (
+            0,
+            11.5px,
+            20.5px,
+          ),
+          left: (
+            13px,
+            0,
+            0,
+          ),
+        )
+      );
+      @include options-desk(
+        (
+          width: 1px,
+        )
+      );
+      @include options-mob(
+        (
+          height: 1px,
+        )
+      );
+      bottom: 0;
+      background-color: $GRAY;
+    }
+
+    @include NOT-MOB {
+      :before {
+        height: 100%;
+      }
+    }
+
+    @include NOT-DESK {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      &:before {
+        width: 100%;
+      }
+    }
+  }
+
+  &__point {
+    position: relative;
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    @include options(
+      (
+        grid-gap: (
+          15px,
+          8px,
+          15px,
+        ),
+        width: (
+          auto,
+          63px,
+          101px,
+        ),
+        --point-index-size: (
+          26px,
+          25px,
+          40px,
+        ),
+      )
+    );
+
+    @include NOT-DESK {
+      flex-direction: column;
+    }
+
+    &_done {
+      --point-index-opacity: 0;
+      --point-image-opacity: 1;
+    }
+
+    &_active {
+      --point-color: #{$RED};
+      --point-text-color: #{$TEXT};
+    }
+  }
+
+  &__pointIndex {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    width: var(--point-index-size);
+    height: var(--point-index-size);
+  }
+
+  &__pointIndexBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    @include options(
+      (
+        font-size: (
+          13px,
+          13px,
+          20px,
+        ),
+        border-width: (
+          2px,
+          2px,
+          3px,
+        ),
+      )
+    );
+
+    background-color: $WHITE;
+    border-style: solid;
+    border-color: var(--point-color, #{$GRAY});
+    color: var(--point-color, #{$GRAY});
+    font-weight: 700;
+    transition:
+      border-color 0.3s,
+      color 0.3s;
+    box-sizing: border-box;
+  }
+
+  &__pointIndexImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__pointTitle {
+    display: inline-block;
+    vertical-align: middle;
+    @include option(font-size, 13px, 9px, 16px);
+    color: var(--point-text-color, #{$GRAY});
+    transition: color 0.3s;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  &__itemList {
+    width: 100%;
+    text-align: left;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    justify-content: start;
+
+    @include option(grid-gap, 0 41px, 14px, 0 43px);
+
+    @include MOBILE {
+      grid-template-columns: repeat(3, auto);
+    }
+  }
+
+  &__itemType {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    @include options(
+      (
+        width: (
+          140px,
+          93px,
+          137px,
+        ),
+        height: (
+          168px,
+          112px,
+          167px,
+        ),
+        --item-type-image-size: (
+          80px,
+          55px,
+          80px,
+        ),
+      )
+    );
+    transition:
+      --base-color 0.3s $B-EASE,
+      --base-circle-color 0.3s $B-EASE;
+
+    cursor: pointer;
+    --base-color: #{$TEXT};
+    --base-circle-color: none;
+
+    &_active {
+      --base-color: #{$RED};
+      --base-circle-color: var(--base-color);
+    }
+  }
+
+  &__itemTypeBlock {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: $WHITE;
+    @include border($d: 2px, $t: 1.5px, $m: 2px, $color: var(--base-color));
+    transition: 0.3s $B-EASE;
+  }
+
+  &__itemTypeImage {
+    width: var(--item-type-image-size);
+    height: var(--item-type-image-size);
+    @include option(margin, 0 auto 10px, 0 auto 7px, 0 auto 6px);
+    object-fit: contain;
+
+    svg {
+      width: 100%;
+      height: 100%;
+
+      *[stroke] {
+        stroke: var(--base-color);
+      }
+
+      circle {
+        stroke: var(--base-color);
+        fill: var(--base-circle-color);
+      }
+    }
+  }
+
+  &__itemTypeTitle {
+    width: 100%;
+    @include options(
+      (
+        height: (
+          18px,
+          11px,
+          19px,
+        ),
+        font-size: (
+          14px,
+          9px,
+          16px,
+        ),
+      )
+    );
+    text-align: center;
+    font-weight: 500;
+    text-transform: uppercase;
+    white-space: pre-line;
+    color: var(--base-color);
+    transition: 0.3s $B-EASE;
+  }
+
+  &__itemTypeBorders {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: top left;
+    transition: 0.3s $B-EASE;
+  }
+
+  &__itemTypeBorder {
+    @include shadow($color: var(--base-color));
+  }
+
+  &__itemCheckbox {
+  }
+
+  &__input {
+    position: relative;
+    @include options(
+      (
+        width: (
+          895px,
+          334px,
+          855px,
+        ),
+        height: (
+          54px,
+          52px,
+          61px,
+        ),
+        margin: (
+          0 0 22px,
+          0 0 11px,
+          0 0 30px,
+        ),
+      )
+    );
+
+    /*
+    &:active,
+    &:hover,
+    &:focus{
+      z-index: 10;
+    }
+    */
+
+    &_textarea {
+      @include options(
+        (
+          width: (
+            906px,
+            337px,
+            859px,
+          ),
+          height: (
+            194px,
+            158px,
+            330px,
+          ),
+        )
+      );
+    }
+
+    &_date {
+      display: inline-block;
+      vertical-align: middle;
+      @include options(
+        (
+          width: (
+            355px,
+            334px,
+            379px,
+          ),
+          margin: (
+            0,
+            0 0 28px,
+            0,
+          ),
+        )
+      );
+
+      :global(.react-datepicker-wrapper) {
+        width: 100%;
+        height: 100%;
+      }
+
+      :global(.react-datepicker-popper) {
+        z-index: 3;
+      }
+
+      :global(.react-datepicker__input-container) {
+        width: 100%;
+        height: 100%;
+
+        input {
+          @include option(padding, 0 0 0 60px);
+        }
+      }
+
+      & input {
+        cursor: pointer;
+      }
+
+      &:last-child {
+        @include option(margin, 0);
+      }
+
+      @include MOBILE {
+        display: block;
+      }
+    }
+
+    &_error {
+      --input-base-color: #{$RED};
+    }
+
+    textarea {
+      width: 100%;
+      height: 100%;
+      resize: none;
+      line-height: 1.2;
+      border: none;
+      color: #041433;
+      text-transform: uppercase;
+      font-weight: 700;
+      box-sizing: border-box;
+      font-size: 1em;
+      padding: 1.2em;
+    }
+  }
+
+  &__inputBlock {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: $WHITE;
+    @include border($t: 3px, $color: var(--input-base-color, #{$TEXT}));
+    transition: border-color 0.3s $M-EASE;
+    -webkit-border-radius: 0;
+    @include input("error") {
+      :global(.input__block) {
+        color: $RED;
+
+        &::placeholder {
+          color: $RED;
+        }
+      }
+    }
+  }
+
+  &__inputBorders {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: top left;
+  }
+
+  &__inputBorder {
+    @include shadow($shm: 7px, $color: var(--input-base-color, #{$TEXT}));
+  }
+
+  &__inputStub {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+    @include options(
+      (
+        left: (
+          19px,
+          18px,
+          21px,
+        ),
+        width: (
+          25px,
+          25px,
+          28px,
+        ),
+        height: (
+          25px,
+          25px,
+          28px,
+        ),
+      )
+    );
+    margin: auto 0;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  &__inputStubImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+  }
+
+  &__inputStubInput {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  &__itemDate {
+    text-align: left;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    @include option(grid-gap, 24px, 27px, 27px);
+
+    @include MOBILE {
+      flex-direction: column;
+    }
+  }
+
+  &__itemDateItem {
+    display: inline-block;
+    vertical-align: middle;
+
+    @include MOBILE {
+      display: block;
+    }
+  }
+
+  &__itemDateSep {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+
+    @include options(
+      (
+        width: (
+          35px,
+          0,
+          36px,
+        ),
+        height: (
+          17px,
+          0,
+          18px,
+        ),
+      )
+    );
+
+    @include MOBILE {
+      display: none;
+    }
+  }
+
+  &__itemDateSepBlock {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: $WHITE;
+    @include border($t: 3px);
+  }
+
+  &__itemDateSepBorders {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: top left;
+  }
+
+  &__itemDateSepBorder {
+    @include shadow($sh: 5px, $sht: 6px, $shm: 0);
+  }
+
+  &__itemFooter {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    @include MOBILE {
+      display: block;
+    }
+  }
+
+  &__itemDocs {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    vertical-align: top;
+    overflow-x: auto;
+    @include options(
+      (
+        padding: (
+          10px 6px 0 0,
+          20px 8px 0 0,
+          10px 5px 0 0,
+        ),
+        margin: (
+          0 0 0 42px,
+          0 0 0,
+          0 0 0 34px,
+        ),
+        grid-column-gap: (
+          26px,
+          23px,
+          35px,
+        ),
+      )
+    );
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @include MOBILE {
+      display: flex;
+    }
+  }
+
+  &__buttonContainer {
+    flex-shrink: 0;
+    --custom-button-disabled-fill: #{$WHITE};
+    @include option(padding-top, 10px);
+
+    button {
+      &:disabled {
+        svg {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
+  &__warning {
+    @include options(
+      (
+        font-size: (
+          10px,
+          8px,
+          10px,
+        ),
+        margin: (
+          15px 0 0,
+          12px 0 0,
+          15px 0 0,
+        ),
+        padding: 0 0 0 5px,
+      )
+    );
+  }
+
+  &__doc {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    @include option(grid-gap, 16px, 10px, 15px);
+    vertical-align: top;
+  }
+
+  &__docBlock {
+    position: relative;
+    @include options(
+      (
+        width: (
+          44px,
+          37px,
+          55px,
+        ),
+        height: (
+          45px,
+          35px,
+          51px,
+        ),
+      )
+    );
+  }
+
+  &__docContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: $WHITE;
+    @include border();
+  }
+
+  &__docIndex {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    @include options(
+      (
+        padding: (
+          0 0 12px,
+          0 0 13px,
+          0 0 15px,
+        ),
+        font-size: (
+          7px,
+          5.5px,
+          8.13px,
+        ),
+      )
+    );
+    line-height: 1.2;
+    font-weight: 800;
+    box-sizing: border-box;
+  }
+
+  &__docImage {
+    @include options(
+      (
+        width: (
+          19px,
+          15px,
+          22px,
+        ),
+        height: (
+          21px,
+          17px,
+          25px,
+        ),
+      )
+    );
+  }
+
+  &__docBorder {
+    @include shadow($sh: 6px, $sht: 8px, $shm: 5px);
+  }
+
+  &__docTitle {
+    @include options(
+      (
+        width: (
+          44px,
+          37px,
+          55px,
+        ),
+        font-size: (
+          7px,
+          5px,
+          8px,
+        ),
+      )
+    );
+    line-height: 1.2;
+    font-weight: 600;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__result {
+    position: fixed;
+    @include options(
+      (
+        bottom: (
+          46px,
+          224px,
+          152px,
+        ),
+        right: (
+          88px,
+          33px,
+          90px,
+        ),
+        width: (
+          348px,
+          348px,
+          343px,
+        ),
+        height: (
+          54px,
+          54px,
+          54px,
+        ),
+      )
+    );
+
+    z-index: $z-modal + 1;
+  }
+
+  &__resultBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    @include options(
+      (
+        padding: (
+          0 19px,
+          0 19px,
+          0 19px,
+        ),
+        font-size: (
+          14px,
+          14px,
+          16px,
+        ),
+      )
+    );
+    background-color: $WHITE;
+    @include border($t: 3px);
+    font-weight: 800;
+    color: $RED;
+    border-color: $RED;
+  }
+
+  &__resultBorder {
+    @include shadow($sh: 12px, $sht: 10px, $shm: 12px);
+    background-color: $RED;
+  }
+}

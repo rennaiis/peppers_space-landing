@@ -1,0 +1,416 @@
+@use "@styles/base" as *;
+
+.gameList {
+  @mixin mod($mod) {
+    @include modifier("gameList", $mod) {
+      @content;
+    }
+  }
+  @mixin item($mod) {
+    @include modifier("gameList__item", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gameList_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  $del: 0.3s;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  @include option2(padding, 127px 0 140px);
+  background: radial-gradient(187.62% 293.62% at 100% 35.87%, #53187e 0%, #0b0430 37.82%);
+  box-sizing: border-box;
+
+  &__title {
+    position: relative;
+    width: 100%;
+    @include option2(margin, 0 auto);
+  }
+
+  &__titleBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    user-select: none;
+  }
+
+  &__titleText {
+    position: relative;
+    @include option2(margin, 0);
+    @include option2(padding, 18px 0 12px);
+    font-family: $ZAR;
+    @include option2(font-size, 29px);
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+    color: $WHITE;
+  }
+
+  &__items {
+    @include option2(width, 386px);
+    max-width: 100%;
+    height: 100%;
+    @include option2(margin, 0 auto 0);
+    @include option2(--scroll-content-padding, 28px 7px 18px);
+
+    :global(.ScrollbarsCustom-Content) {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      width: 100%;
+      box-sizing: border-box;
+      @include option2(grid-gap, 35px);
+    }
+  }
+
+  &__item {
+    position: relative;
+    width: 100%;
+    @include option2(min-height, 190px);
+    margin: 0 auto;
+    background-color: rgba(62, 0, 126, 0.5);
+    @include option2(border-radius, 1px);
+    border: 1px solid #7123b1;
+    box-sizing: border-box;
+  }
+
+  &__itemBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  &__itemBgItem {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &__itemContent {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  &__itemBox {
+    position: relative;
+  }
+
+  &__itemPerson {
+    position: absolute;
+    @include option2(bottom, 0px);
+    @include option2(left, -1px);
+    @include option2(width, 179px);
+    @include option2(height, 225px);
+    overflow: hidden;
+  }
+
+  &__itemPersonContainer {
+    position: absolute;
+    @include option2(bottom, -10px);
+    @include option2(left, 0px);
+    width: 100%;
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      user-select: none;
+    }
+  }
+
+  &__itemPersonShadow,
+  &__itemPersonBlock {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &__itemPersonShadow {
+    animation: game-list-person 1.5s infinite linear;
+    z-index: 1;
+  }
+
+  &__itemWrapper {
+    display: flex;
+    flex-direction: column;
+    @include option2(width, 210px);
+    @include option2(padding, 9px 0 10px);
+  }
+
+  &__itemTitle {
+    position: relative;
+    align-self: end;
+    font-family: $ZAR;
+    @include option2(margin, 0 0 4px);
+    @include option2(padding, 7px 18px 1px 61px);
+    @include option2(font-size, 30px);
+    font-weight: 400;
+    line-height: 0.9;
+    text-align: end;
+    color: $WHITE;
+    background: linear-gradient(122deg, transparent 21%, #bc0bbd 22%);
+
+    &::before {
+      position: absolute;
+      top: 0;
+      @include option2(right, -7px);
+
+      content: "";
+      @include option2(width, 7px);
+      height: 124%;
+      background: linear-gradient(-45deg, transparent 17%, #db08d2 18%);
+    }
+  }
+
+  &__itemScore {
+    position: relative;
+    align-self: end;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    @include option2(width, 205px);
+    @include option2(height, 50px);
+    @include option2(margin, 0 0 5px);
+    @include option2(padding, 0 39px 0 0);
+    box-sizing: border-box;
+  }
+
+  &__itemScoreBgImg {
+    position: absolute;
+    top: 50%;
+    @include option2(left, 8px);
+    transform: translateY(-50%);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  &__itemScoreImg {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    @include option2(width, 43px);
+    @include option2(height, 43px);
+
+    &:before {
+      position: absolute;
+      content: "";
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      @include option2(width, 20px);
+      @include option2(height, 20px);
+      margin: auto;
+      background-color: $PINK;
+      border-radius: 50%;
+      filter: blur(4px);
+      animation: game-list-progress 1.5s infinite linear 1s;
+    }
+  }
+
+  &__itemScoreImgBlock {
+    position: relative;
+    @include option2(height, 20px);
+  }
+
+  &__itemScoreText {
+    position: relative;
+    font-family: $WASTEBASED;
+    @include option2(font-size, 18px);
+    font-weight: 400;
+    line-height: 1;
+    color: $WHITE;
+  }
+
+  &__itemLevel {
+    align-self: end;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    @include option2(grid-template-rows, 16px auto);
+    @include option2(width, 187px);
+    @include option2(margin, 0 13px 0);
+    box-sizing: border-box;
+  }
+
+  &__itemLevelText {
+    @include option2(margin, 0);
+    font-family: $WASTEBASED;
+    @include option2(font-size, 12px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: $WHITE;
+  }
+
+  &__itemLevelCount {
+    justify-self: end;
+    font-family: $WASTEBASED;
+    @include option2(font-size, 12px);
+    font-weight: 400;
+    line-height: 1;
+    text-transform: uppercase;
+    color: $WHITE;
+    transform: translateY(-16%);
+
+    &_max {
+      color: #ccaaff;
+    }
+  }
+
+  &__itemLevelProgressBlock {
+    position: relative;
+
+    grid-column: span 2;
+    width: 100%;
+    @include option2(height, 6px);
+    @include option2(margin, 0);
+
+    box-sizing: border-box;
+  }
+
+  &__itemLevelProgressLine {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+    background-color: #2a0b58;
+    @include option2(border-radius, 120px);
+    border: solid rgba(255, 255, 255, 0.3);
+    @include option2(border-width, 0.2px);
+
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  &__itemLevelProgressLineCurrent {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+
+    width: 100%;
+    @include option2(height, 5px);
+    @include option2(border-radius, 120px);
+    background: linear-gradient(90deg, #db08d2 57.39%, #ffe5fa 100%);
+    transition: width 0.1s linear;
+  }
+
+  &__itemLevelProgressStarBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include option2(width, 183px);
+    @include option2(height, 6px);
+  }
+
+  &__itemLevelProgressStar {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    @include option2(height, 6px);
+    transition: left 0.1s linear;
+  }
+
+  &__itemLevelProgressStarImg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include option2(height, 20px);
+    animation: game-list-progress 1.5s infinite linear 0.5s;
+
+    img {
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__itemLevelProgressStarBeam {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include option2(width, 1px);
+    @include option2(height, 24px);
+    border: solid rgba(255, 255, 255, 0.25);
+    @include option2(border-width, 1px);
+    filter: blur(1px);
+  }
+
+  &__itemButtons {
+    align-self: end;
+
+    display: flex;
+    align-items: center;
+    @include option2(grid-gap, 11px);
+    @include option2(margin, 22px 13px 0);
+  }
+
+  &__itemButtonScore {
+  }
+
+  &__itemButtonPlay {
+  }
+
+  &__exit {
+    position: absolute;
+    left: 0;
+    right: 0;
+    @include option2(bottom, 36px);
+    margin: 0 auto;
+  }
+
+  &__menu {
+    position: absolute;
+    @include option2(bottom, $gameMenuBottom);
+    @include option2(left, 0);
+    @include option2(right, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    @include option2(margin, 0 auto);
+    @include option2(padding, 0 15px);
+    box-sizing: border-box;
+  }
+}

@@ -1,0 +1,99 @@
+@use "@styles/base" as *;
+
+.gameMain {
+  @mixin mod($mod) {
+    @include modifier("gameMain", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gameMain_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  @include option2(padding, 65px 15px $gameMenuBottom);
+  box-sizing: border-box;
+
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    :global(._isIos) & {
+      position: fixed;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  &__counters {
+    width: 50%;
+  }
+
+  &__counter {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    vertical-align: top;
+    @include option2(margin, 0 10px 0 0);
+    @include option2(padding, 6px 15px 6px 6px);
+    @include option2(border-radius, 2px);
+    background-color: #ececec;
+  }
+
+  &__counterImg {
+    @include option2(width, 24px);
+    @include option2(height, 24px);
+    @include option2(margin, 0 10px 0 0);
+  }
+
+  &__counterText {
+    font-family: $ZAR;
+    @include option2(min-width, 25px);
+    @include option2(padding, 4px 0 0);
+    @include option2(font-size, 22px);
+    text-align: center;
+    font-weight: 400;
+  }
+
+  &__headerBlock {
+    text-align: right;
+  }
+
+  &__buttons {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    @include option2(top, 163px);
+    @include option2(right, 15px);
+  }
+}

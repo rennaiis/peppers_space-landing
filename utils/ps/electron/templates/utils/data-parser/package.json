@@ -1,0 +1,27 @@
+{
+  "name": "data",
+  "version": "0.0.1",
+  "description": "",
+  "main": "apps.js",
+  "scripts": {
+    "clear-cache": "node -e \"require('./utils/cache-utils').clear({dir: 'w:\\\\dev\\\\2000\\\\000000\\\\content\\\\main\\\\'}).catch(console.error);\"",
+    "parse-content": "node spreadsheet-parser --output=w:\\dev\\2000\\000000\\content\\ --app every",
+    "server": "node server --host https://node-000000.dev.peppers-studio.ru"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
+    "google-spreadsheet": "^3.1.15",
+    "jimp": "^0.16.1",
+    "leaflet": "^1.7.1",
+    "typograf": "^6.12.1",
+    "yargs": "^17.0.1"
+  },
+  "optionalDependencies": {
+    "sharp": "^0.28.3"
+  },
+  "project_id": "000000"
+}

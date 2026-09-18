@@ -1,0 +1,117 @@
+@use "constants" as *;
+@use "adaptive" as *;
+@use "functions" as *;
+@use "normalize.css/normalize.css";
+
+// использовать options из mixins нельзя из-за того, что там используется :global() доступный только в .module.scss
+@mixin option($name, $value) {
+  #{$name}: vw($value);
+  @include DESKTOP-BIG {
+    #{$name}: $value;
+  }
+  @include DESKTOP {
+    &.portrait,
+    .portrait & {
+      #{$name}: vw($value);
+    }
+    &.landscape,
+    .landscape & {
+      #{$name}: vh($value);
+    }
+  }
+  @include MOBILE {
+    #{$name}: vwm($value);
+  }
+  @include TABLET {
+    #{$name}: vwt($value);
+  }
+}
+
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+html {
+  height: 100%;
+  background: #ffffff;
+  //@extend %DEFAULT;
+
+  font-family: $BASE-FONT;
+  color: $TEXT;
+  @include option(font-size, $PIC);
+}
+
+#__next {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  opacity: 1;
+  transition: opacity 0.2s;
+  min-height: 100vh;
+  
+
+  &.preload {
+    opacity: 0;
+    overflow: hidden;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+hr {
+  height: 1px;
+  width: 100%;
+}
+
+a,
+button,
+input,
+textarea,
+[tabindex] {
+  color: inherit;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+form {
+  margin-block-end: 0;
+}
+
+* {
+  transform-origin: 50% 50%;
+  -webkit-tap-highlight-color: transparent;
+}
+svg * {
+  transform-origin: 0 0;
+}
+
+.clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// в темной теме браузера могут перекрашиваться svg-элементы (белый станет церным, инвертируется)
+:root {
+  color-scheme: only light;
+}

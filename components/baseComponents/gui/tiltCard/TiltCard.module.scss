@@ -1,0 +1,24 @@
+@use "@/styles/base" as *;
+
+.tiltCard {
+  @mixin mod($mod) {
+    @include modifier("tiltCard", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .tiltCard_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  position: relative;
+
+  &__content {
+    width: 100%;
+    //height: 100%;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,52 @@
+@use "@styles/base" as *;
+
+.space {
+  @include content;
+  width: 100%;
+  
+  &__content{
+    display: flex;
+    flex-direction: column;
+    @include options((
+      gap: (24px, 10px),
+      padding-top: (85px, 41px),
+      padding-bottom: (99px, 57px),
+      height: (780px, 716px)
+    ));
+  }
+  &__title{
+    @extend %SUBTITLE-SMALL;
+    @include options((
+      max-width: 600px,
+    ));
+  }
+
+  &__logo{
+    @include option(margin-left, 54px, 0px);
+    @include NOT-MOB{
+      order: 3
+    }
+  }
+  &__button{
+    @include options((
+      margin-left: (54px, 0px),
+    ));
+    justify-self: flex-start;
+    @include NOT-DESKTOP{
+      align-self: center;
+    }
+    margin-top: auto;
+  }
+  @mixin mod($mod) {
+    @include modifier("space", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .space_#{$mod} & {
+        @content;
+      }
+    }
+  }
+}

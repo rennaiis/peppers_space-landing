@@ -1,0 +1,47 @@
+@use "@styles/base" as *;
+
+.gameToggle {
+  @mixin mod($mod) {
+    @include modifier("gameToggle", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gameToggle_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  position: relative;
+  @include option2(width, 273px);
+  @include option2(height, 36px);
+  @include option2(min-height, 36px);
+  @include option2(border-radius, 5px);
+  background-color: #e8e8e8;
+
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    @include option2(border-radius, 5px);
+    background-color: #cecece;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &__block {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  &__button {
+  }
+}

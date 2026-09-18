@@ -1,0 +1,14 @@
+node_modules
+public
+static
+*.md
+.deploy
+.idea
+.infra
+.next
+*.min.js
+
+utils/template/component
+utils/template/page
+utils/ps/threejs/src/shaders
+components/baseComponents/extended/webgl-lite/shaders

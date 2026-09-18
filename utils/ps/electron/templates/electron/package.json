@@ -1,0 +1,58 @@
+{
+  "name": "000000",
+  "version": "0.0.1",
+  "author": "peppers",
+  "private": true,
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "electron:run": "electron ./electron-main.js",
+    "electron:debug": "electron ./electron-main.js --dev-tools --localhost --display=2 --show-cursor",
+    "electron:debug-server": "electron ./electron-main.js --dev-tools --server --display=2 --show-cursor",
+    "electron:build-n-run": "gulp build && npm run electron",
+    "electron:build": "electron-builder",
+    "socket-hub": "set PORT=8008 && node -e \"require('./websocket/websocket-hub.js')('ws')\""
+  },
+  "main": "electron-main.js",
+  "build": {
+    "appId": "000000",
+    "mac": {
+      "category": "peppers.000000"
+    },
+    "directories": {
+      "output": "../release"
+    },
+    "files": [
+      "**/*.{js,html,json}",
+      "package.json"
+    ],
+    "asar": false,
+    "asarUnpack": "dist",
+    "win": {
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "axios": "^1.5.1",
+    "electron-log": "^4.2.2",
+    "express": "^4.18.2",
+    "express-http-proxy": "^1.6.3",
+    "tuio-extended": "^1.0.0",
+    "ws": "^8.13.0",
+    "yargs": "^17.3.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "electron": "^38.1.2",
+    "electron-builder": "^26.0.12"
+  },
+  "project_id": "000000"
+}

@@ -1,0 +1,139 @@
+@use "@styles/base" as *;
+
+.winners { 
+  width: 100%;
+  @include content();
+  &__bgItem{
+    &_man{
+      @include options((
+        top: 236px,
+        left: 138px,
+        width: 354px,
+      ));
+      @include NOT-DESKTOP{
+        display: none;
+      }
+    }
+  }
+  &__content{
+    display: flex;
+    flex-direction: column;
+    @include options((
+      gap: (62px, 55px),
+      padding-top: (78px, 44px),
+      padding-bottom: (66px, 67px)
+    ));
+  }
+  &__head{
+    @include option(gap, 12px, 6px);
+    display: flex;
+    flex-direction: column;
+  }
+  &__title{
+    @extend %SUBTITLE;
+    color: $RED;
+  }
+  &__link{
+    display: flex;
+    align-items:center;
+
+    @include options((gap: (22px, 16px)))
+  }
+  &__linkArrow{
+    @include options((
+      width: (32px, 27px)
+    ))
+  }
+  &__linkCaption{
+   @extend %SMALL-TEXT
+  }
+  &__container{
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    @include options((
+      width: (718px, 372px),
+      margin-right: (55px, 0px),
+      gap: (42px, 47px)
+    ));
+    align-items: center;
+  }
+  &__carouselContainer{
+    position: relative;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    @include NOT-DESKTOP{
+      align-self: center;
+    }
+    @include options((
+      width: (720px, 372px),
+    ));
+  }
+  &__carousel{  
+    @include options((
+      width: (551px, 372px),
+    ));
+    align-self: center;
+    object-fit: contain;
+    z-index: $z-carousel;
+    :global(.swiper-slide){
+      visibility: hidden;
+      width: auto;
+      @include options((
+      ))
+    };
+    :global(.swiper-slide-prev){
+      @include option(translate, 70px 0, 150px 0)
+    }
+    :global(.swiper-slide-next){
+      @include option(translate, -70px 0, -150px 0)
+    }
+    :global(.swiper-slide-active),
+    :global(.swiper-slide-prev),
+    :global(.swiper-slide-next){
+      visibility: visible;
+    };
+  };
+  &__arrowImg{
+    width: 100%;
+    height: 100%
+  }
+  &__arrow{
+    position: absolute;
+    z-index: $z-carousel + 1;
+    &_right{
+      @include options((
+        right: (0px, 0px),
+      ));
+      
+    }
+    &_left{
+       @include options((
+        left: (0px, 0px),
+      ));
+    }
+    @include options((
+      top: (28.5%, 93px),
+      width:  (60px, 51.8px),
+      height:  (60px, 51.8px),
+    ));
+  };
+ 
+
+
+
+  @mixin mod($mod) {
+    @include modifier("winners", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .winners_#{$mod} & {
+        @content;
+      }
+    }
+  }
+}

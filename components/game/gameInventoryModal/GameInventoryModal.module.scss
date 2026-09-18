@@ -1,0 +1,296 @@
+@use "@styles/base" as *;
+
+@property --mask-top-opacity {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false;
+}
+@property --mask-bottom-opacity {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false;
+}
+
+.gameInventoryModal {
+  @mixin mod($mod) {
+    @include modifier("gameInventoryModal", $mod) {
+      @content;
+    }
+  }
+  @mixin item($mod) {
+    @include modifier("gameInventoryModal__item", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gameInventoryModal_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  $dCoeff: 0.8;
+
+  position: relative;
+  @include option2(width, 362px);
+  @include option2(margin, 20px * $dCoeff auto, 20px auto);
+
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom center;
+  }
+
+  &__border {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: -1%;
+    width: 102%;
+    height: 100%;
+  }
+
+  &__borderItem {
+    position: relative;
+    width: 100%;
+    @include option2(height, 70px);
+    overflow: hidden;
+
+    &_middle {
+      height: 100%;
+    }
+  }
+
+  &__borderItemBlock {
+    position: absolute;
+    left: 0;
+    width: 100%;
+
+    &_top {
+      top: 0;
+      height: auto;
+    }
+
+    &_middle {
+      top: 50%;
+      height: 120%;
+      transform: translateY(-50%);
+    }
+
+    &_bottom {
+      bottom: 0;
+      height: auto;
+    }
+  }
+
+  &__block {
+    width: 100%;
+    @include option2(padding, 20px);
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  &__about {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    @include option2(padding, 20px * $dCoeff 20px, 20px);
+    @include option2(margin, 0 auto 8px, 0 auto 18px);
+    box-sizing: border-box;
+    border: 1px solid #ffffff80;
+    background-color: rgba($BLACK, 0.35);
+  }
+
+  &__image {
+    position: relative;
+    width: 100%;
+    @include option2(height, 90px, 130px);
+    max-height: 16vh;
+    @include option2(margin, 0 auto 5px);
+    object-fit: contain;
+  }
+
+  &__info {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    @include option2(margin, 0 auto 1px);
+  }
+
+  &__title {
+    font-family: $WASTEBASED;
+    @include option2(margin, 0 9px 0 0);
+    @include option2(font-size, 24px);
+    color: $WHITE;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  &__lvl {
+    font-family: $WASTEBASED;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    @include option2(width, 41px);
+    @include option2(height, 20px);
+    @include option2(font-size, 18px);
+    color: $WHITE;
+    background: #4c003c;
+    box-shadow:
+      0px 0px 1.5px 0px #12001f59,
+      0px 0px 1.5px 0px #12001f59,
+      0px 1.5px 3px 0px #9c007ba6 inset,
+      0px 1.5px 2.5px 0px #9c007ba6 inset,
+      0px 0.5px 1.5px 0px #d804ab59 inset;
+  }
+
+  &__state {
+    position: relative;
+    font-family: $SEGOE;
+    @include option2(margin, 0 0 15px);
+    @include option2(font-size, 14px);
+    font-weight: 400;
+    text-transform: uppercase;
+
+    &_1 {
+      color: #828282;
+    }
+
+    &_2 {
+      color: $WHITE;
+      text-shadow: 0 0 4px #ffffffb2;
+    }
+
+    &_3 {
+      color: #00bbff;
+      text-shadow: 0 0 4px #18e7ee;
+    }
+
+    &_4 {
+      color: #ff9d00;
+      text-shadow: 0 0 4px #ffe345cc;
+    }
+  }
+
+  &__button {
+    @include option2(margin, 5px 0 0, 11px 0 0);
+  }
+
+  &__close {
+    --g-button-position: absolute;
+    @include option2(top, 36px);
+    @include option2(right, 36px);
+  }
+
+  &__carousel {
+    width: 100%;
+    -webkit-mask: linear-gradient(
+      to right,
+      rgba($WHITE, var(--mask-top-opacity, 0)) 0%,
+      rgba($WHITE, var(--mask-top-opacity, 0)) 5%,
+      rgba($WHITE, 1) 15%,
+      rgba($WHITE, 1) 85%,
+      rgba($WHITE, var(--mask-bottom-opacity, 0)) 95%,
+      rgba($WHITE, var(--mask-bottom-opacity, 0)) 100%
+    );
+
+    &_start {
+      --mask-top-opacity: 1;
+    }
+
+    &_end {
+      --mask-bottom-opacity: 1;
+    }
+
+    :global(.swiper) {
+      @include option2(padding, 7px * $dCoeff 24px * $dCoeff 7px * $dCoeff 16px * $dCoeff, 7px 24px 7px 16px);
+    }
+
+    :global(.swiper-slide) {
+      @include option2(width, 66px * $dCoeff !important, 66px !important);
+      @include option2(height, 143px * $dCoeff, 143px);
+      @include option2(margin, 0 14px * $dCoeff 0 0, 0 14px 0 0);
+
+      &:last-child {
+        @include option2(margin, 0);
+      }
+    }
+  }
+
+  &__item {
+    position: relative;
+    @include option2(width, 66px * $dCoeff, 66px);
+    @include option2(height, 143px * $dCoeff, 143px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+
+    &_odd {
+      --itemBlock-top: auto;
+      --itemBlock-bottom: 0;
+    }
+  }
+
+  &__itemBlock {
+    position: absolute;
+    top: var(--itemBlock-top, 0);
+    bottom: var(--itemBlock-bottom, unset);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    @include option2(width, 72px * 1.25 * $dCoeff, 72px * 1.25);
+    @include option2(height, 75px * 1.25 * $dCoeff, 75px * 1.25);
+  }
+
+  &__itemBorder {
+    position: absolute;
+    @include option2(top, 1.4px);
+    @include option2(left, -3px);
+    @include option2(width, 78px * 1.25 * $dCoeff, 78px * 1.25);
+    @include option2(height, 72px * 1.25 * $dCoeff, 72px * 1.25);
+  }
+
+  &__itemImage {
+    position: relative;
+    @include option2(width, 42px * $dCoeff, 42px);
+    @include option2(height, 42px * $dCoeff, 42px);
+    object-fit: contain;
+  }
+
+  &__itemCounter {
+    position: absolute;
+    font-family: $WASTEBASED;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    @include option2(bottom, 0px);
+    @include option2(left, 20px);
+    @include option2(width, 32px);
+    @include option2(height, 15px);
+    @include option2(font-size, 14px);
+    color: $WHITE;
+    background: #4c003c;
+    box-shadow:
+      0px 0px 1.5px 0px #12001f59,
+      0px 0px 1.5px 0px #12001f59,
+      0px 1.5px 3px 0px #9c007ba6 inset,
+      0px 1.5px 2.5px 0px #9c007ba6 inset,
+      0px 0.5px 1.5px 0px #d804ab59 inset;
+  }
+}

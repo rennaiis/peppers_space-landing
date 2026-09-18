@@ -1,0 +1,9 @@
+module.exports = [
+  {
+    subtype: "pixijs",
+    type: "texture",
+    name: "empty",
+    path: "assets/texture/",
+    fileName: "empty.jpg",
+  },
+];

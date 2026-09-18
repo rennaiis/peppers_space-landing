@@ -1,0 +1,75 @@
+@use "@styles/base" as *;
+
+.gameAuth {
+  @mixin mod($mod) {
+    @include modifier("gameAuth", $mod) {
+      @content;
+    }
+  }
+  @mixin item($mod) {
+    @include modifier("gameAuth__item", $mod) {
+      @content;
+    }
+  }
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  @include option2(padding, 175px 15px 65px);
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: $WASTEBASED;
+  color: $WHITE;
+  text-align: center;
+
+  &__bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  &__title {
+    position: relative;
+    @include option2(margin, 0 auto 0);
+    @include option2(font-size, 52px);
+    text-shadow: 0px 0px 4px #ff00ff;
+  }
+
+  &__social,
+  &__footer {
+    position: relative;
+    text-align: center;
+  }
+
+  &__socialTitle {
+    width: 100%;
+    @include option2(margin, 0 auto 18px);
+    @include option2(font-size, 20px);
+  }
+
+  &__socialButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    @include option2(gap, 22px);
+  }
+
+  &__button {
+    margin: 0 auto;
+  }
+
+  &__note {
+    @include option2(margin, 15px auto 0);
+    @include option2(font-size, 12px);
+    color: rgba($WHITE, 0.5);
+  }
+}

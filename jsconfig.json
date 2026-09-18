@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@PS": ["utils/ps/index.js"],
+      "@PS/*": ["utils/ps/*"],
+      "@styles/*": ["styles/*"]
+    }
+  }
+}

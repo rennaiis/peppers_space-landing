@@ -1,0 +1,122 @@
+@use "@styles/base" as *;
+
+.buy {
+  @include content($CONTENT-W, 380px);
+  width: 100%;
+
+  &__content{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    @include options((
+      padding-top: (77px, 40px),
+      padding-bottom: (145px, 66px),
+      gap: (63px, 45px)
+    ));
+  }
+  &__title{
+    @extend %SUBTITLE;
+    @include options((
+      max-width: 900px,
+      line-height: (1.09em, 1.2em)  
+    ));
+    color: $WHITE;    
+  }
+  
+  &__block{
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr;
+    box-sizing: border-box;
+    grid-template-areas: 
+      'video' 
+      'carousel' 
+      'button';
+    @include NOT-MOB{
+      grid-template-columns: 1fr auto;
+      grid-template-rows:  auto auto 1fr;
+      grid-template-areas: 
+        'carousel video' 
+        'carousel button'
+        'carousel .'
+    }
+    @include options((
+      padding: (0 55px, 0px), 
+      gap: (25px, 50px)
+      ));
+  }
+  &__cardsCarousel{
+    grid-area: carousel;
+    @include NOT-DESKTOP{
+      position: relative;
+      width: 100vw;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+    }
+  }
+  &__carousel{
+    @include options((
+        margin: 0,
+        margin-top: (-10px, 0px),
+        width: 556px,
+        height: (515px, auto) 
+      ));
+    
+    @include NOT-DESKTOP{
+      width: 100vw;
+    }
+  }
+
+  &__button{
+    @include option(margin-top, 3px, 7px);
+    grid-area: button;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__video{
+    grid-area: video;
+    position: relative;
+    @include options((
+      width: (443px, 375px),
+      height: (268px, 226px),
+    ))
+  }
+  &__preview{
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &__pause{
+    position: absolute;
+    inset: 0;
+    img{
+      width: 100%;
+      height: 100%
+    }
+    @include option(width, 94px, 79px);
+    position: absolute;
+    background-color:#00000000;
+    border: none;
+    inset: 0;
+    left: 40%
+  }
+  
+
+  @mixin mod($mod) {
+    @include modifier("buy", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .buy_#{$mod} & {
+        @content;
+      }
+    }
+  }
+}

@@ -1,0 +1,381 @@
+@use "@styles/base" as *;
+
+.customButton {
+  @mixin mod($mod) {
+    @include modifier("customButton", $mod) {
+      @content;
+    }
+  }
+
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .customButton_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  $sh: 7px;
+  $sht: 7px;
+  $shm: 6px;
+
+  display: flex;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  text-decoration: none;
+  width: fit-content;
+  box-sizing: border-box;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+  user-select: none;
+  --button-block-border-color: var(--button-text-color);
+  --button-path-color: var(--button-text-color);
+
+  &_add {
+    @include options(
+      (
+        width: (
+          273px - $sh,
+          261px - $shm,
+          333px - $sht,
+        ),
+        height: (
+          51px - $sh,
+          41px - $shm,
+          59px - $sht,
+        ),
+        --button-image-font-size: (
+          25px,
+          18px,
+          27px,
+        ),
+        --button-font-size: (
+          14px,
+          13px,
+          17px,
+        ),
+        --button-block-grid-gap: (
+          12px,
+          17px,
+          17px,
+        ),
+      )
+    );
+    --button-image-width: 1em;
+    --button-image-height: 1em;
+  }
+
+  &_nav {
+    @include options(
+      (
+        width: auto,
+        min-width: (
+          73px - $sh,
+          59px - $shm,
+          81px - $sht,
+        ),
+        height: (
+          51px - $sh,
+          41px - $shm,
+          57px - $sht,
+        ),
+        --button-image-font-size: (
+          19px,
+          14px,
+          19px,
+        ),
+        --button-block-padding: (
+          0 17px,
+          0 13px,
+          0 22px,
+        ),
+      )
+    );
+
+    --button-image-width: 1em;
+    --button-image-min-width: 1em;
+    --button-image-height: 1em;
+  }
+  &_player{
+    background-color: none;
+    padding: 0;
+    --button-block-bg-color: transparent;
+  }
+  &_close {
+    position: fixed;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+      @include options(
+      (
+        top: (56px, 20px),
+        right: (58px, 58px),
+        width: (
+          29px,
+          21px,
+        ),
+        height: (
+          29px,
+          21px,
+        ),
+      )
+    );
+
+    --button-block-bg-color: transparent;
+  }
+
+  &_link {
+    @include options(
+      (
+        width: auto,
+        height: auto,
+        --button-image-font-size: (
+          16px,
+          19px,
+          26px,
+        ),
+        --button-font-size: (
+          16px,
+          18px,
+          24px,
+        ),
+        --button-block-grid-gap: (
+          10px,
+          12px,
+          16px,
+        ),
+      )
+    );
+    --button-image-width: 1em;
+    --button-image-height: 1em;
+
+    --button-text-color: #{$WHITE};
+    --button-font-weight: 500;
+
+    --button-block-bg-color: transparent;
+  }
+
+  &_linkGray {
+    @include option(--button-font-size, 14px, 18px, 24px);
+    --button-text-color: #{$BLACK};
+  }
+
+  &_soc {
+    display: inline-flex;
+    @include options(
+      (
+        width: (
+          28px,
+          34px,
+          55px,
+        ),
+        height: (
+          34px,
+          34px,
+          55px,
+        ),
+      )
+    );
+
+    --button-block-bg-color: transparent;
+  }
+
+  &_socWs {
+    @include options(
+      (
+        width: (
+          190px,
+          238px,
+          377px,
+        ),
+        height: (
+          24px,
+          34px,
+          55px,
+        ),
+      )
+    );
+  } 
+
+  &_yellow{
+    --button-bg-color: #{$YELLOW};
+    --button-letter-spacing: 0.1em;
+    --button-light:"";
+    @include options((
+        --button-block-padding: (22px 77px, 22px 73px),
+        --button-border-radius: (4px, 5px),
+        --button-font-size: (19px)
+      ));   
+
+      @include HOVER{
+        &:global(.button_hover){
+          --button-bg-color: #{$DARK-YELLOW};
+        }
+      }
+  }
+  &_intro{
+     @include options((
+        --button-block-padding: (22px 70px, 29px 85px),
+      )); 
+  }
+  &_winners{
+     @include options((
+        --button-block-padding: (22px 70px, 23px 65px),
+      )); 
+  }
+
+  &_results{
+     @include options((
+        --button-block-padding: (24px 71px, 23px 65px),
+      )); 
+  }
+  &_buy{
+     @include options((
+        --button-block-padding: (22px 64px, 23px 60px),
+      )); 
+  }
+  &_space{
+     @include options((
+        --button-block-padding: (22px 55px, 23px 55px),
+      )); 
+  }
+  &_steps{
+     @include options((
+        --button-block-padding: (22px 72px, 23px 67px),
+      )); 
+  }
+  &_winnerWatch{
+    @include options((
+      --button-image-width: (91px, 80px),
+      --button-font-size:(24px, 21px),
+      ));
+      --button-block-display: inline-flex;
+      --button-block-flex-direction: column;
+      --button-text-color: #{$WHITE};
+  }
+
+  
+  @keyframes light {
+    0% {
+      transform: translateX(100%) translateY(-50%) rotate(45deg);
+    }
+    50%,100% {
+      transform: translateX(-100%)  translateY(-50%) rotate(45deg);
+    }
+  }
+  &__block {
+    position: relative;
+    background: var(--button-bg-color,unset);
+    padding: var(--button-block-padding, unset);
+    display: var(--button-block-display,block);
+    flex-direction: var(--button-block-flex-direction, row);
+    justify-content: var(--button-block-justify-content, center);
+    align-items: var(--button-block-align-items, center);
+    overflow: hidden;
+    border-radius: var(--button-border-radius, unset);
+    transition: background-color 0.3s ease-in-out;
+  
+    
+    &:before{
+      content: var(--button-light, none);
+      clear: both;
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 200%;
+      background: linear-gradient(0deg, rgba($WHITE,0) 25%, rgba($WHITE,1), rgba($WHITE,0) 75%);
+      animation: light 3s infinite ease-in-out;
+    } 
+    
+    @include mods("link", "soc", "close") {
+      border: none;
+    }
+  }
+
+  &__text {
+    position: relative;
+    font-size: var(--button-font-size, 1em);
+    color: var(--button-text-color, #{$BLACK});
+    letter-spacing: var(--button-letter-spacing,0em);
+    transition:
+      color 0.3s ease-in-out,
+      width 0.3s ease-in-out,
+      opacity 0.3s ease-in-out;
+    white-space: nowrap;
+
+    @include mod("nav") {
+      order: 1;
+      @include option(width, 0px);
+      overflow: hidden;
+      text-align: left;
+      opacity: 0;
+      transition:
+        color 0.3s ease-in-out,
+        width 0.3s ease-in-out 0.2s,
+        opacity 0.3s ease-in-out 0s;
+    }
+
+    @include mod("navFull") {
+      @include option(width, 159px, 131px, 178px);
+      opacity: 1;
+      transition:
+        color 0.3s ease-in-out,
+        width 0.3s ease-in-out 0s,
+        opacity 0.3s ease-in-out 0.2s;
+    }
+
+    // @include mod("winnerWatch"){
+    //   @extend %WHITE_CAPTION;
+    // }
+
+    @include mod("link") {
+      white-space: pre-wrap;
+    }
+  }
+
+  &__image {
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out;
+    overflow: hidden;
+    font-size: var(--button-image-font-size, 1em);
+    width: var(--button-image-width, 100%);
+    height: var(--button-image-height, 100%);
+    min-width: var(--button-image-min-width, auto);
+
+    img,
+    svg {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+
+      path[fill] {
+        fill: var(--button-path-color, #{$BLACK});
+      }
+
+      path {
+        transition: fill 0.3s ease-in-out;
+      }
+    }
+
+    @include mod("nav") {
+      order: 2;
+    }
+  }
+
+  &__border {
+    @include shadow($sh: $sh, $sht: $sht, $shm: $shm);
+    background-color: var(--button-block-border-color, #{$RED});
+
+    @include mods("link", "soc", "close") {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@use "@styles/base" as *;
+.button {
+  cursor: pointer;
+  position: var(--button-position, relative);
+  display: var(--button-display, inline-flex);
+  flex-direction: var(--button-flex-direction, row);
+  justify-content: var(--button-justify-content, center);
+  align-items: var(--button-align-items, center);
+
+  font-size: var(--button-font-size, 16px);
+}

@@ -1,0 +1,89 @@
+@use "@styles/base" as *;
+
+.gamePreloader {
+  @mixin mod($mod) {
+    @include modifier("gamePreloader", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gamePreloader_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  @include animation-option(
+    ".game-preloader",
+    (
+      opacity: (
+        0,
+        1,
+      ),
+    ),
+    $inner: false
+  );
+
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__block {
+    position: relative;
+    @include option2(width, $DESIGN-W-M);
+    margin: auto;
+  }
+
+  &__text {
+    font-family: $ZAR;
+    width: 100%;
+    @include option2(height, 68px);
+    font-weight: 700;
+    text-align: center;
+
+    &_front {
+      position: relative;
+      -webkit-mask-size: cover !important;
+    }
+
+    &_back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__textItem {
+    display: inline-block;
+    vertical-align: middle;
+    @include option2(width, 35px);
+    @include option2(height, 68px);
+    @include option2(margin, 0 4.5px);
+    object-fit: contain;
+
+    &_first {
+      @include option2(margin, 0 4.5px 0 -35px);
+    }
+
+    &_right {
+      @include option2(width, 52px);
+    }
+  }
+}

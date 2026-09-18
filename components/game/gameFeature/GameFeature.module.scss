@@ -1,0 +1,97 @@
+@use "@styles/base" as *;
+
+.gameFeature {
+  @mixin mod($mod) {
+    @include modifier("gameFeature", $mod) {
+      @content;
+    }
+  }
+  @mixin item($mod) {
+    @include modifier("gameFeature__item", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gameFeature_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  position: relative;
+  @include option2(width, 279px);
+  @include option2(grid-gap, 10px);
+
+  &__item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    @include option2(width, 116px);
+    @include option2(height, 42px);
+  }
+
+  &__itemImage {
+    position: relative;
+    @include option2(width, 28px);
+    @include option2(height, 28px);
+    @include option2(margin, 0 7px 0 0);
+  }
+
+  &__itemImageBlock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include option2(width, 74px);
+    @include option2(height, 74px);
+    transform: translate(-50%, -50%);
+  }
+
+  &__itemBg {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    @include option2(height, 58px);
+    transform: translateY(-50%);
+  }
+
+  &__itemTitle {
+    position: relative;
+    font-family: $SEGOE;
+    @include option2(margin, -2px 0 -4px);
+    @include option2(font-size, 12px);
+    font-weight: 600;
+    color: $WHITE;
+  }
+
+  &__itemScore {
+    position: relative;
+    text-align: left;
+  }
+
+  &__itemScoreMain {
+    font-family: $WASTEBASED;
+    display: inline-block;
+    vertical-align: middle;
+    @include option2(margin, 0 4px 0 0);
+    @include option2(font-size, 20px);
+    color: $WHITE;
+    font-weight: 400;
+  }
+
+  &__itemScoreAdd {
+    font-family: $WASTEBASED;
+    display: inline-block;
+    vertical-align: middle;
+    @include option2(font-size, 16px);
+    color: #ff0099;
+    font-weight: 400;
+  }
+}

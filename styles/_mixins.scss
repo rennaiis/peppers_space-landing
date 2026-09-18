@@ -1,0 +1,408 @@
+@use "sass:string";
+@use "sass:meta";
+@use "sass:math";
+@use "sass:list";
+@use "sass:map";
+@use "@styles/constants" as *;
+@use "@styles/functions" as *;
+@use "@styles/adaptive" as *;
+
+@forward "@styles/mixins/cross";
+@forward "@styles/mixins/triangle";
+@forward "@styles/mixins/sequence-keyframes";
+
+@mixin modifier($class, $mod) {
+  $modTmp: string.unquote("");
+  @if meta.type-of($mod) == list {
+    @each $m in $mod {
+      $modTmp: $modTmp + string.unquote(".#{$class}_#{$m}");
+    }
+  } @else {
+    $modTmp: string.unquote(".#{$class}_#{$mod}");
+  }
+
+  //@debug list.nth(list.nth(&, 1), 1);
+  $first-class: split-pseudo-class(list.nth(list.nth(&, 1), 1));
+  @if list.length($first-class) > 1 {
+    @for $i from 2 through list.length($first-class) {
+      $modTmp: $modTmp + string.unquote("::") + list.nth($first-class, $i);
+    }
+  }
+
+  @if (list.nth($first-class, 1) != string.unquote(".#{$class}")) {
+    $modTmp: $modTmp + string.unquote(" &");
+  }
+
+  @at-root #{$modTmp} {
+    @content;
+  }
+}
+
+@mixin hover($selector: false) {
+  @if $selector {
+    @include DESKTOP() {
+      #{$selector}:hover & {
+        @content;
+      }
+    }
+    @include NOT-DESKTOP() {
+      #{$selector}:active & {
+        @content;
+      }
+    }
+  } @else {
+    @include DESKTOP() {
+      &:hover {
+        @content;
+      }
+    }
+    @include NOT-DESKTOP() {
+      &:active {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin shake-animation($name, $center, $amplitude, $count, $duration, $delay: 0s) {
+  $shakePart: math.div($duration, $delay + $duration);
+
+  $stepPart: percentage(math.div($shakePart, $count * 4));
+  @keyframes #{$name} {
+    0% {
+      transform: scale($center);
+    }
+    @for $i from 0 to $count {
+      #{($i * 4 + 1) * $stepPart} {
+        transform: scale($center - $amplitude);
+      }
+      #{($i * 4 + 3) * $stepPart} {
+        transform: scale($center + $amplitude);
+      }
+    }
+    100% {
+      transform: scale($center);
+    }
+  }
+
+  @if & {
+    animation: $name $delay + $duration linear 0s infinite both;
+  }
+}
+
+@mixin is-burger {
+  @include NOT-DESKTOP() {
+    @content;
+  }
+}
+
+@mixin menu-visible {
+  #menu-burger:checked ~ * & {
+    @content;
+  }
+}
+
+@mixin option($n, $v, $vm: $v, $vt: $vm) {
+  @include options-desk((#{$n}: $v));
+  @include options-mob((#{$n}: ($vm, $vt)));
+}
+
+@mixin option2($n, $v, $vm: $v) {
+  #{$n}: vh($v);
+  @include MOBILE {
+    #{$n}: vwm2($vm);
+  }
+}
+
+@mixin option-mob($n, $vm, $vt: $vm) {
+  @include options-mob((#{$n}: ($vm, $vt)));
+}
+
+@mixin option-desk($n, $v) {
+  @include options-desk((#{$n}: $v));
+}
+
+@mixin animation($animation) {
+  @if content {
+    @keyframes #{list.nth($animation, 1)} {
+      @content;
+    }
+  }
+  @if & {
+    @if list.length($animation) == 1 {
+      animation-name: $animation;
+    } @else if list.length($animation) > 1 {
+      animation: $animation;
+    }
+  }
+}
+
+@mixin m-animation($mod, $mods...) {
+  @each $mod2 in $mods {
+    #{$mod2}-#{$mod} & {
+      @content;
+    }
+  }
+}
+
+@mixin border($d: 3px, $t: 2px, $m: 3px, $color: $TEXT) {
+  border: solid $color;
+  box-sizing: border-box;
+  @include options(
+    (
+      border-width: (
+        $d,
+        $t,
+        $m,
+      ),
+      border-bottom-width: (
+        $d * 0.5,
+        $t * 0.5,
+        $m * 0.5,
+      ),
+      border-right-width: (
+        $d * 0.5,
+        $t * 0.5,
+        $m * 0.5,
+      ),
+    )
+  );
+}
+
+@mixin shadow($sh: 10px, $sht: 10px, $shm: 7px, $color: $TEXT) {
+  $coeff: 1.3;
+  $pos: 0px;
+  position: absolute;
+  background-color: $color;
+  transition: background-color 0.3s $B-EASE;
+
+  &_bottom {
+    top: 100%;
+    width: 100%;
+    @include options(
+      (
+        left: $pos * -1,
+        height: (
+          $sh + $pos,
+          $shm + $pos,
+          $sht + $pos,
+        ),
+      )
+    );
+    transform: skewX(45deg);
+    transform-origin: top left;
+  }
+
+  &_full {
+    @include options(
+      (
+        top: (
+          $sh + 0px,
+          $shm,
+          $sht,
+        ),
+        left: (
+          $sh + 0px,
+          $shm,
+          $sht,
+        ),
+      )
+    );
+    width: 100%;
+    height: 100%;
+  }
+
+  &_right {
+    left: 100%;
+    @include options(
+      (
+        top: $pos * -1,
+        width: (
+          $sh + $pos,
+          $shm + $pos,
+          $sht + $pos,
+        ),
+      )
+    );
+    height: 100%;
+    transform: skewY(45deg);
+    transform-origin: top left;
+  }
+}
+
+@mixin ios-top() {
+  @include option2(padding-top, $iosTop);
+  box-sizing: border-box;
+}
+
+@function selectorInner($baseClass, $mod) {
+  @return ":global(#{$baseClass}-#{$mod}) &";
+}
+@function selectorOuter($baseClass, $mod) {
+  @return "&:global(#{$baseClass}-#{$mod})";
+}
+
+@mixin animation-option(
+  $baseClass,
+  $properties,
+  $ease: $M-EASE,
+  $easeEnter: $ease,
+  $easeExit: $ease,
+  $duration: 0.3s,
+  $durationEnter: $duration,
+  $durationExit: $duration,
+  $delay: unset,
+  $delayEnter: $delay,
+  $delayExit: $delay,
+  $inner: true,
+  $direction: in-out
+) {
+  $all-properties: ();
+
+  @each $name, $value in $properties {
+    $all-properties: list.append($all-properties, $name, comma);
+  }
+
+  $gen-enter: list.index("in-out" "in", $direction) != null;
+  $gen-exit: list.index("in-out" "out", $direction) != null;
+  $selectorName: if(sass($inner): selectorInner; else: selectorOuter);
+  $selector: meta.get-function($selectorName);
+
+  @if $gen-enter {
+    #{meta.call($selector, $baseClass, enter)} {
+      @each $name, $value in $properties {
+        #{$name}: list.nth($value, 1);
+      }
+    }
+
+    #{meta.call($selector, $baseClass, enter-active)} {
+      @each $name, $value in $properties {
+        #{$name}: list.nth($value, 2);
+      }
+      transition-property: $all-properties;
+      transition-timing-function: $easeEnter;
+      transition-duration: $durationEnter;
+      transition-delay: $delayEnter;
+    }
+  }
+
+  @if $gen-exit {
+    #{meta.call($selector, $baseClass, exit)} {
+      @each $name, $value in $properties {
+        #{$name}: list.nth($value, 2);
+      }
+    }
+
+    #{meta.call($selector, $baseClass, exit-active)} {
+      @each $name, $value in $properties {
+        #{$name}: list.nth($value, 1);
+      }
+      transition-property: $all-properties;
+      transition-timing-function: $easeExit;
+      transition-duration: $durationExit;
+      transition-delay: $delayExit;
+    }
+  }
+}
+
+@function void($param) {
+  @return $param;
+}
+@mixin options-iterate($properties, $fn: void, $i: false) {
+  @each $name, $value in $properties {
+    @if $i != false {
+      #{$name}: meta.call(meta.get-function($fn), list.nth($value, math.min($i, list.length($value))));
+    } @else {
+      #{$name}: meta.call(meta.get-function($fn), $value);
+    }
+  }
+}
+
+@mixin options-desk($properties) {
+  @include NOT-MOB {
+    :global(.portrait) & {
+      @include options-iterate($properties, vw);
+    }
+    :global(.landscape) & {
+      @include options-iterate($properties, vh);
+    }
+  }
+}
+
+@mixin options-mob($properties) {
+  @include MOBILE {
+    @include options-iterate($properties, vwm, 1);
+  }
+  @include TABLET {
+    @include options-iterate($properties, vwt, 2);
+  }
+}
+
+@mixin options($properties) {
+  $desk-props: ();
+  $mob-props: ();
+
+  @each $name, $value in $properties {
+    $v: null;
+    $vm: null;
+    $vt: null;
+
+    @if (meta.type-of($value) == "list" and list.separator($value) == "comma") {
+      $v: list.nth($value, 1);
+      $vm: if(sass(list.length($value) >= 2): list.nth($value, 2) ; else: $v);
+      $vt: if(sass(list.length($value) >= 3): list.nth($value, 3) ; else: $vm);
+    } @else {
+      $v: $value;
+      $vm: $v;
+      $vt: $vm;
+    }
+
+    $desk-props: map.merge(
+      $desk-props,
+      (
+        $name: $v,
+      )
+    );
+    $mob-props: map.merge(
+      $mob-props,
+      (
+        $name: (
+            $vm,
+            $vt,
+          ),
+      )
+    );
+  }
+
+  @include options-desk($desk-props);
+  @include options-mob($mob-props);
+}
+
+@mixin content($w:$CONTENT-W, $wm:$CONTENT-W-M){
+position: relative;
+
+  &__content{
+    position: relative;
+    @include options((width: ($w, $wm)));
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  &__bg{
+    position: absolute;
+    inset: 0;
+  }
+
+  &__bgItem{
+    position: absolute;
+    &_back{
+      width: 100%;
+      height: 100%;
+    }
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  
+}

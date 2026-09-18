@@ -1,0 +1,79 @@
+@use "@styles/base" as *;
+
+.container {
+  @mixin mod($mod) {
+    @include modifier("container", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .container_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  overflow: hidden;
+
+  @include NOT-MOB-2 {
+    background: #0f0f1e;
+  }
+
+  &_game {
+  }
+
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+
+    ._isIos & {
+      position: fixed;
+      height: 100vh;
+    }
+
+    @include mod("game") {
+      position: fixed;
+      background: radial-gradient(187.62% 293.62% at 100% 35.87%, #53187e 0%, #0b0430 37.82%);
+    }
+  }
+
+  &__block {
+    position: relative;
+    @include option2(width, 402px);
+    height: 100%;
+    @include NOT-MOB-2 {
+      height: 100%;
+      background: $WHITE;
+      overflow: hidden;
+    }
+    @include TABLET {
+      @include option2(width, 482px);
+      @include option2(height, 874px);
+      max-height: 100%;
+    }
+
+    :global(._isIos) & {
+      @include ios-top;
+    }
+
+    @include mod("game") {
+      overflow: hidden;
+    }
+  }
+}

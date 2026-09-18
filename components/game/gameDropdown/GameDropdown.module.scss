@@ -1,0 +1,206 @@
+@use "@styles/base" as *;
+
+.gameDropdown {
+  @mixin mod($mod) {
+    @include modifier("gameDropdown", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gameDropdown_#{$mod} & {
+        @content;
+      }
+    }
+  }
+  position: relative;
+  @include option2(width, 154px);
+  z-index: 2;
+
+  &__header {
+    position: relative;
+    width: 100%;
+    @include option2(height, 36px);
+    @include option2(padding, 1.26px);
+    @include option2(border-radius, 3px);
+    box-sizing: border-box;
+    overflow: hidden;
+    background: linear-gradient(
+      to right,
+      rgba(#a02686, 1) -33.06%,
+      rgba(#e0acd5, 1) 20%,
+      rgba(#e0acd5, 1) 80%,
+      rgba(#a02686, 1) 100%
+    );
+    z-index: 2;
+  }
+
+  &__headerBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    @include option2(padding, 6px 9px 8px 10px);
+    @include option2(border-radius, 2px);
+    box-sizing: border-box;
+    overflow: hidden;
+    background: #420234cc;
+    box-shadow:
+      0px 0px 14px 0px #12001f59,
+      0px 0px 10px 0px #12001f59,
+      0px 12.57px 37.72px 0px #9c007ba6 inset,
+      0px 12.57px 25.15px 0px #9c007ba6 inset,
+      0px 5.03px 15.09px 0px #d804ab59 inset;
+  }
+
+  &__headerImg {
+    position: relative;
+    @include option2(width, 20px);
+    @include option2(height, 20px);
+    @include option2(margin, 0 10px 0 0);
+  }
+
+  &__headerImgBlock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include option2(width, 62px);
+    @include option2(height, 60px);
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+  }
+
+  &__headerText {
+    font-family: $ZAR;
+    @include option2(padding, 4px 0 0);
+    @include option2(font-size, 20px);
+    color: $WHITE;
+    font-weight: 400;
+    text-transform: uppercase;
+    text-shadow: 0px 0px 0.1em #ff00ff;
+  }
+
+  &__headerArrow {
+    position: absolute;
+    @include option2(top, 0);
+    @include option2(bottom, 0);
+    @include option2(right, 9px);
+    @include option2(width, 24px);
+    @include option2(height, 24px);
+    margin: auto 0;
+  }
+
+  &__headerArrowBlock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include option2(width, 52px);
+    @include option2(height, 44px);
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+  }
+
+  &__list {
+    position: absolute;
+    @include option2(top, 0);
+    left: 0;
+    width: 100%;
+    @include option2(height, 218px);
+    overflow: hidden;
+
+    transform-origin: center top;
+    //transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out;
+    @include option2(padding, 1.26px);
+    @include option2(border-radius, 3px);
+    box-sizing: border-box;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background: linear-gradient(
+      to right,
+      rgba(#a02686, 1) -33.06%,
+      rgba(#e0acd5, 1) 20%,
+      rgba(#e0acd5, 1) 80%,
+      rgba(#a02686, 1) 100%
+    );
+    z-index: 1;
+    --track-color: #{rgba(#db08d2, 0.2)};
+    --track-border-radius: 0;
+    @include option2(--track-width, 3px);
+    --thumb-color: #db08d2;
+  }
+
+  &__listContainer {
+    width: 100%;
+    height: 100%;
+    @include option2(padding, 36px 10px 0px 0px);
+    @include option2(border-radius, 2px);
+    box-sizing: border-box;
+    overflow: hidden;
+    background: #420234cc;
+    box-shadow:
+      0px 0px 14px 0px #12001f59,
+      0px 0px 10px 0px #12001f59,
+      0px 12.57px 37.72px 0px #9c007ba6 inset,
+      0px 12.57px 25.15px 0px #9c007ba6 inset,
+      0px 5.03px 15.09px 0px #d804ab59 inset;
+  }
+
+  &__listBlock {
+    width: 100%;
+    @include option2(padding, 0 5px);
+    box-sizing: border-box;
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    @include option2(padding, 6px 0 2px 28px);
+    box-sizing: border-box;
+
+    &:before {
+      position: absolute;
+      content: "";
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 30%,
+        rgba(255, 255, 255, 0.6) 70%,
+        rgba(255, 255, 255, 0) 100%
+      );
+    }
+
+    &:last-child {
+      &:before {
+        display: none;
+      }
+    }
+  }
+
+  &__itemImg {
+    @include option2(width, 16px);
+    @include option2(height, 16px);
+    @include option2(margin, 0 6px 0 0);
+    object-fit: contain;
+  }
+
+  &__itemText {
+    font-family: $ZAR;
+    @include option2(font-size, 20px);
+    color: $WHITE;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+}

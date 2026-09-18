@@ -1,0 +1,59 @@
+@use "@styles/base" as *;
+
+@property --gameTitle-clip-left {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+
+@property --gameTitle-clip-right {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+
+.gameTitle {
+  @mixin mod($mod) {
+    @include modifier("gameTitle", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gameTitle_#{$mod} & {
+        @content;
+      }
+    }
+  }
+  position: relative;
+  width: 100%;
+  clip-path: polygon(
+    var(--gameTitle-clip-left) 0%,
+    var(--gameTitle-clip-right) 0%,
+    var(--gameTitle-clip-right) 100%,
+    var(--gameTitle-clip-left) 100%
+  );
+  @include option2(margin, 0);
+
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    user-select: none;
+  }
+
+  &__text {
+    position: relative;
+    display: block;
+    @include option2(padding, 21px 0 18px);
+    font-family: $ZAR;
+    @include option2(font-size, 29px);
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+    color: $WHITE;
+  }
+}

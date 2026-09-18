@@ -1,0 +1,32 @@
+@use "@styles/base" as *;
+@use "@styles/normalize";
+
+
+:root {
+  --modal-opacity-start: 0;
+  --modal-opacity-end: 1;
+  --modal-content-bg: none;
+  --modal-content-width: auto;
+  --modal-content-border: none;
+  --modal-transform-start: scale(0.7);
+  --modal-transform-end: scale(1);
+  --button-font-size: 16px;
+
+  --track-color: rgba(0, 0, 0, 0.1);
+  --thumb-color: rgba(0, 0, 0, 0.5);
+  --track-width: 0.5em;
+  --track-offset-start: 0.5em;
+  --track-offset-end: var(--track-offset-start, 0.5em);
+  --track-border-radius: 0.5em;
+  @include option2(--g-button-font-size, 32px);
+  @include option2(--g-button-width, 154px);
+  @include option2(--g-button-height, 50px);
+
+  #menu-burger {
+    display: none;
+  }
+
+  .container-main {
+    width: 100%;
+  }
+}

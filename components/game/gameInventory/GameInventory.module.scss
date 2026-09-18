@@ -1,0 +1,192 @@
+@use "@styles/base" as *;
+
+.gameInventory {
+  @mixin mod($mod) {
+    @include modifier("gameInventory", $mod) {
+      @content;
+    }
+  }
+  @mixin item($mod) {
+    @include modifier("gameInventory__item", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gameInventory_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  $del: 0.3s;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  @include option2(padding, 117px 15px 10px);
+  background: radial-gradient(187.62% 293.62% at 100% 35.87%, #53187e 0%, #0b0430 37.82%);
+  box-sizing: border-box;
+
+  &__block {
+    position: relative;
+    @include option2(width, 362px);
+    @include option2(height, 475px);
+    @include option2(margin, 23px auto 83px);
+  }
+
+  &__person {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 92%;
+    margin: auto;
+    object-fit: contain;
+  }
+
+  &__blockBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: 100% auto;
+    object-position: top center;
+  }
+
+  &__footer {
+    width: 100%;
+    @include option2(height, 56px);
+  }
+
+  &__menu {
+    position: absolute;
+    left: 0;
+    @include option2(bottom, $gameMenuBottom);
+    @include option2(padding, 0 15px);
+    box-sizing: border-box;
+  }
+
+  &__border {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: -0.4%;
+    left: -1.5%;
+    width: 103.5%;
+    height: 100.8%;
+  }
+
+  &__borderItem {
+    position: relative;
+    width: 100%;
+    @include option2(height, 50px);
+    overflow: hidden;
+
+    &_middle {
+      height: 100%;
+    }
+  }
+
+  &__borderItemBlock {
+    position: absolute;
+    left: 0;
+    width: 100%;
+
+    &_top {
+      top: 0;
+      height: auto;
+    }
+
+    &_middle {
+      top: 50%;
+      height: 120%;
+      transform: translateY(-50%);
+    }
+
+    &_bottom {
+      bottom: 0;
+      height: auto;
+    }
+  }
+
+  &__heroButton {
+    position: absolute !important;
+    @include option2(top, 20px);
+    @include option2(right, 23px);
+  }
+
+  &__items {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    align-content: end;
+    justify-items: center;
+    grid-template-columns: repeat(8, 1fr);
+    grid-auto-rows: minmax(auto, auto);
+    @include option2(grid-gap, 2px);
+    @include option2(padding, 0 10px 15px);
+    box-sizing: border-box;
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    @include option2(width, 72px);
+    @include option2(height, 75px);
+  }
+
+  &__itemBorder {
+    position: absolute;
+    @include option2(top, 1.4px);
+    @include option2(left, -3px);
+    @include option2(width, 78px);
+    @include option2(height, 72px);
+  }
+
+  &__itemImage {
+    position: relative;
+    @include option2(width, 42px);
+    @include option2(height, 42px);
+    object-fit: contain;
+  }
+
+  &__itemCounter {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    @include option2(width, 32px);
+    @include option2(height, 15px);
+    font-family: $WASTEBASED;
+    @include option2(font-size, 14px);
+    color: $WHITE;
+    background: #4c003c;
+    box-shadow:
+      0 0 1.5px 0 #12001f59,
+      0 0 1.5px 0 #12001f59,
+      0 1.5px 3px 0 #9c007ba6 inset,
+      0 1.5px 2.5px 0 #9c007ba6 inset,
+      0 0.5px 1.5px 0 #d804ab59 inset;
+    transform: translateX(-50%);
+  }
+}

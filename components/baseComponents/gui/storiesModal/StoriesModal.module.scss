@@ -1,0 +1,167 @@
+@use "sass:math";
+@use "@styles/base" as *;
+
+.storiesModal {
+  @mixin mod($mod) {
+    @include modifier("storiesModal", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .storiesModal_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  width: 100%;
+  height: 100%;
+
+  grid-gap: 24px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  @include is-burger {
+    display: block;
+    grid-gap: 0;
+  }
+
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__content {
+    position: relative;
+    grid-area: nContent;
+    width: math.div(75, 80) * 1vh; // подбираем пропорции
+    height: 80vh;
+
+    @include is-burger {
+      width: 100%;
+      height: 100%;
+    }
+
+    & > div {
+      background: none !important;
+
+      & > div:first-child {
+        // pagination
+        width: 100% !important;
+        padding: 16px !important;
+        box-sizing: border-box !important;
+        @include is-burger {
+          padding: 15px !important;
+        }
+      }
+
+      & > div:nth-child(2) {
+        border-radius: 8px;
+        overflow: hidden;
+        @include is-burger {
+          border-radius: 0;
+        }
+      }
+
+      & > div:last-child {
+        // navigation, чтоб не перекрывала кнопку
+        bottom: 80px;
+        top: 0;
+        height: auto !important;
+      }
+    }
+  }
+
+  &__page {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-radius: 8px;
+    overflow: hidden;
+    @include is-burger {
+      border-radius: 0;
+    }
+  }
+
+  &__pageImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__pageContent {
+    position: relative;
+    width: 100%;
+    padding: 40px 24px 24px;
+    box-sizing: border-box;
+    background: linear-gradient(0deg, rgba(#212121, 1), rgba(#212121, 0));
+    border-radius: 0 0 8px 8px;
+    @include is-burger {
+      border-radius: 0;
+      padding: 40px 22px 22px;
+    }
+  }
+
+  &__pageTitle {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 500;
+    font-family: $BASE-FONT;
+    margin: 0;
+  }
+
+  &__pageText {
+    margin: 8px 0 0;
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  &__closeButton {
+    width: 56px;
+    height: 56px;
+    grid-area: nButton;
+
+    .button__icon {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    @include is-burger {
+      position: absolute;
+      top: 26px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      z-index: 100 + 1;
+
+      rect {
+        fill-opacity: 0.5;
+        fill: #212121;
+      }
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
+}

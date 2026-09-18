@@ -1,0 +1,96 @@
+@use "@styles/base" as *;
+
+.customMenu {
+  // Константы
+  @mixin mod($mod) {
+    @include modifier("customMenu", $mod) {
+      @content;
+    }
+  }
+
+  @mixin item($mod) {
+    @include modifier("customMenu__item", $mod) {
+      @content;
+    }
+  }
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $TEXT;
+  @include option(padding, 73px 0 0, 133px 0 0, 160px 0 0);
+  cursor: pointer;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  &__items {
+    width: 100%;
+    height: 100%;
+
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+
+    &:before {
+      position: absolute;
+      content: "";
+      top: 99%;
+      left: 0;
+      width: 100%;
+      height: 200%;
+    }
+
+    &:hover {
+      .customMenu__item-link {
+        color: $WHITE;
+        border-bottom: 1px solid $WHITE;
+      }
+    }
+
+    $items: (
+      1: rgba(171, 149, 225, 1),
+      2: rgba(148, 124, 209, 1),
+      3: rgba(124, 99, 185, 1),
+      4: rgba(98, 73, 161, 1),
+      5: $RED,
+    );
+
+    @each $name, $value in $items {
+      &_#{$name} {
+        background-color: $value;
+        z-index: $name;
+
+        &:before {
+          background-color: $value;
+        }
+      }
+    }
+  }
+
+  &__itemLink {
+    display: grid;
+    align-items: center;
+    height: 100%;
+    flex-grow: 1;
+    font-family: $TITLE-FONT;
+    @include option(font-size, 80px, 30px, 80px);
+    color: $WHITE;
+    transition: color 0.3s;
+    white-space: nowrap;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+  }
+}

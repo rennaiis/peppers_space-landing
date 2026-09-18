@@ -1,0 +1,216 @@
+@use "@styles/base" as *;
+
+.footer {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  background-color: $TEXT;
+  overflow: hidden;
+
+  &__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @include options(
+      (
+        width: (
+          $DESIGN-W,
+          $DESIGN-W-M,
+          $DESIGN-W-T,
+        ),
+        padding: (
+          69px 75px 98px,
+          79px 30px 85px,
+          200px 76px 191px,
+        ),
+      )
+    );
+    max-width: 100%;
+    margin: auto;
+    box-sizing: border-box;
+    text-align: left;
+  }
+
+  &__line {
+    width: 100%;
+    @include option(margin, 0 0 57px, 0 0 86px, 0 0 148px);
+  }
+
+  &__lineContainer {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  &__lineBlock {
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    animation: line 100s linear infinite;
+    @keyframes line {
+      0% {
+        transform: translateX(-25%);
+      }
+      100% {
+        transform: translateX(-75%);
+      }
+    }
+  }
+
+  &__lineItem {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  &__lineItemText {
+    display: inline-block;
+    vertical-align: middle;
+    font-family: $TITLE-FONT;
+    @include option(font-size, 80px, 30px, 76px);
+    line-height: 1.2;
+    color: $WHITE;
+    text-transform: uppercase;
+  }
+
+  &__lineItemPoint {
+    display: inline-block;
+    vertical-align: middle;
+    @include options(
+      (
+        font-size: (
+          20px,
+          8px,
+          20px,
+        ),
+        margin: (
+          0 28px,
+          0 18px,
+          0 45px,
+        ),
+      )
+    );
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background-color: $RED;
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+
+    @include NOT-DESK {
+      flex-direction: column;
+    }
+  }
+
+  &__about {
+    @include option(margin, 0, 0 0 67px, 0 0 108px);
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    @include options(
+      (
+        margin: (
+          0 0 25px,
+          0 0 30px,
+          0 0 40px,
+        ),
+        grid-gap: (
+          20px,
+          25px,
+          33px,
+        ),
+      )
+    );
+    text-align: left;
+  }
+
+  &__linkItem {
+    user-select: text;
+    pointer-events: auto;
+  }
+
+  &__soc {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    @include option(grid-gap, 15px, 19.4px, 30px);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    @include options(
+      (
+        grid-gap: (
+          15px,
+          17px,
+          38px,
+        ),
+        margin: (
+          0 0 0px,
+          0 0 57px,
+          0 0 100px,
+        ),
+      )
+    );
+  }
+
+  &__copyright {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    vertical-align: top;
+    @include options(
+      (
+        grid-gap: (
+          10px,
+          10px,
+          30px,
+        ),
+        font-size: (
+          14px,
+          18px,
+          24px,
+        ),
+      )
+    );
+    line-height: 1.2;
+    white-space: pre-line;
+    color: $GRAY;
+    font-weight: 500;
+  }
+
+  &__copyrightPart {
+    display: block;
+  }
+
+  &__logo {
+    display: inline-block;
+    vertical-align: top;
+    @include options-desk(
+      (
+        width: 34px,
+        height: 49px,
+        margin: 0 0 0 88px,
+      )
+    );
+
+    @include NOT-DESK {
+      display: none;
+    }
+  }
+}

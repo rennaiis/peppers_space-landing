@@ -1,0 +1,122 @@
+@use "sass:math";
+@use "@styles/base" as *;
+
+.zoom {
+  @mixin mod($mod) {
+    @include modifier("zoom", $mod) {
+      @content;
+    }
+  }
+
+  width: math.div(92, 35) * 1em;
+  height: math.div(524, 35) * 1em;
+  border-radius: math.div(15, 35) * 1em;
+  background-color: $WHITE;
+
+  &__bg {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: math.div(80, 35) * 1em 0;
+    width: math.div(21, 35) * 1em;
+    height: math.div(394, 35) * 1em;
+    margin: auto;
+    background-color: #cececd;
+    box-sizing: border-box;
+  }
+
+  &__bgLine {
+    width: math.div(35, 35) * 1em;
+    height: math.div(5, 35) * 1em;
+    border-radius: math.div(5, 35) * 1em;
+    background-color: #cececd;
+  }
+
+  &__pointWrapper {
+    position: absolute;
+    top: math.div(85, 35) * 1em;
+    left: math.div(14, 35) * 1em;
+    width: math.div(120, 35) * 1em;
+    height: math.div(350, 35) * 1em;
+  }
+
+  &__point {
+    position: absolute;
+    left: 0;
+    width: math.div(49, 35) * 1em;
+    height: math.div(26, 35) * 1em;
+    top: math.div(11, 35) * 1em;
+    margin: 0 0 0 math.div(-15, 35) * 1em;
+    border-radius: math.div(74, 35) * 1em;
+    background: #3c5604;
+    display: block;
+
+    pointer-events: none;
+    touch-action: none;
+  }
+
+  &__button {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-size: math.div(66, 35) * 1em;
+    width: 1em;
+    height: 1em;
+    padding: 0;
+    border-radius: 50%;
+    background: #3c5604;
+    border: none;
+
+    &:before,
+    &:after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: math.div(34, 66) * 1em;
+      height: math.div(3, 66) * 1em;
+      border-radius: math.div(3, 66) * 1em;
+      margin: auto;
+      background-color: $WHITE;
+    }
+
+    &:after {
+      transform: rotate(90deg);
+    }
+
+    &_add {
+      top: math.div(20, 35) * 1em;
+
+      &:before,
+      &:after {
+        content: "";
+      }
+    }
+
+    &_del {
+      bottom: math.div(20, 35) * 1em;
+
+      &:before {
+        content: "";
+      }
+    }
+
+    &_add,
+    &_del {
+      bottom: math.div(20, 35) * 1em;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

@@ -1,0 +1,31 @@
+@use "sass:string";
+@use "sass:list";
+@use "sass:meta";
+@use "@styles/base" as *;
+
+@mixin modifier($class, $mod) {
+  $modTmp: string.unquote("");
+  @if meta.type-of($mod) == list {
+    @each $m in $mod {
+      $modTmp: $modTmp + string.unquote(".#{$class}_#{$m}");
+    }
+  } @else {
+    $modTmp: string.unquote(".#{$class}_#{$mod}");
+  }
+
+  //@debug list.nth(list.nth(&, 1), 1);
+  $first-class: split-pseudo-class(list.nth(list.nth(&, 1), 1));
+  @if length($first-class) > 1 {
+    @for $i from 2 through length($first-class) {
+      $modTmp: $modTmp + string.unquote("::") + list.nth($first-class, $i);
+    }
+  }
+
+  @if (list.nth($first-class, 1) != string.unquote(".#{$class}")) {
+    $modTmp: $modTmp + string.unquote(" &");
+  }
+
+  @at-root #{$modTmp} {
+    @content;
+  }
+}

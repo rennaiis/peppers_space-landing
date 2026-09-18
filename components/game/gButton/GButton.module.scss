@@ -1,0 +1,441 @@
+@use "@styles/base" as *;
+
+.gButton {
+  @mixin mod($mod) {
+    @include modifier("gButton", $mod) {
+      @content;
+    }
+  }
+
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gButton_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  $sh: 7px;
+  $sht: 7px;
+  $shm: 6px;
+
+  position: var(--g-button-position, relative);
+  display: flex;
+  width: var(--g-button-width, auto);
+  height: var(--g-button-height, auto);
+  @include option2(min-width, 0);
+  border: none;
+  padding: var(--g-button-padding, 0);
+  background: none;
+  cursor: pointer;
+  text-decoration: none;
+  max-width: 100%;
+  box-sizing: border-box;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+  user-select: none;
+  font-family: $WASTEBASED;
+
+  &:disabled,
+  &_disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  &:active {
+    .gButton__text {
+      transform: var(--button-text-transform-active, scale(0.8));
+    }
+    .gButton__imageBlock {
+      transform: var(--button-transform-image-active, scale(0.8));
+    }
+  }
+
+  &_menu {
+    @include option2(--g-button-width, 85px);
+    @include option2(--g-button-height, 36px);
+    @include option2(--g-button-font-size, 16px);
+
+    @include option2(--g-button-text-padding, 8px 9px 7px);
+    --g-button-text-transform: uppercase;
+    --g-button-text-shadow: 0 0 4px #3ec4ff;
+    font-family: $ZAR;
+
+    --g-button-image-position: absolute;
+    @include option2(--g-button-image-width, 85px);
+    @include option2(--g-button-image-height, 66px);
+    --g-button-image-margin: 0 auto;
+    --g-button-img-transform-origin: bottom center;
+
+    --g-button-border-bg: none;
+    --g-button-borderInner-bg: none;
+
+    &:active {
+      --button-text-transform-active: none;
+    }
+  }
+
+  &_mainButton {
+    @include option2(--g-button-width, 85px);
+    @include option2(--g-button-height, 40px);
+    @include option2(--g-button-font-size, 20px);
+  }
+
+  &_home {
+    @include option2(--g-button-width, 45px);
+    --g-button-height: var(--g-button-width);
+  }
+
+  &_booster {
+    @include option2(--g-button-width, 97px);
+    @include option2(--g-button-height, 90px);
+    @include option2(--g-button-font-size, 18px);
+    @include option2(--g-button-text-padding, 2px 0 0);
+    --g-button-text-bg-color: #4c003c;
+
+    --g-button-image-overflow: visible;
+    --g-button-image-transform-origin: bottom center;
+  }
+
+  &_modal {
+    @include option2(--g-button-width, 138px);
+    @include option2(--g-button-height, 36px);
+    @include option2(--g-button-font-size, 18px);
+  }
+
+  &_modalSound {
+    @include option2(--g-button-width, 58px);
+    @include option2(--g-button-height, 26px);
+    @include option2(--g-button-font-size, 16px);
+  }
+
+  &_modalSoundOff {
+    --g-button-text-color: #7e106b;
+  }
+
+  &_modalSoundOn {
+    --g-button-text-color: $WHITE;
+  }
+
+  &_exit {
+    @include option2(--g-button-width, 66px);
+    @include option2(--g-button-height, 40px);
+
+    @include option2(--g-button-image-width, 36px);
+    --g-button-image-height: var(--g-button-image-width);
+  }
+
+  &_toggle {
+    --g-button-height: 100%;
+
+    @include option2(--g-button-font-size, 18px);
+    @include option2(--g-button-text-padding, 6px 0 0);
+    --g-button-text-color: #{$BLACK};
+
+    @include option2(--g-button-image-width, 16px);
+    --g-button-image-height: var(--g-button-image-width);
+    @include option2(--g-button-image-margin, 0 12px 0 0);
+  }
+
+  &_toggleInactive {
+    opacity: 0.5;
+  }
+
+  &_itemScore {
+    @include option2(--g-button-width, 36px);
+    @include option2(--g-button-height, 31.2px);
+
+    @include option2(--g-button-image-width, 22px);
+    --g-button-image-height: var(--g-button-image-width);
+
+    --g-button-border-bg: none;
+    --g-button-border-overflow: visible;
+
+    --g-button-borderInner-bg: none;
+  }
+
+  &_itemPlay {
+    @include option2(--g-button-width, 138px);
+    @include option2(--g-button-height, 32px);
+    font-family: $WASTEBASED;
+    @include option2(--g-button-font-size, 18px);
+    --g-button-text-shadow: 0 0 2px 0 #db08d2;
+  }
+
+  &_hero {
+    @include option2(--g-button-width, 66px);
+    @include option2(--g-button-height, 40px);
+
+    @include option2(--g-button-image-width, 22px);
+    --g-button-image-height: var(--g-button-image-width);
+  }
+
+  &_inventory {
+    @include option2(--g-button-width, 322px);
+    @include option2(--g-button-height, 50px);
+    @include option2(--g-button-font-size, 24px);
+    --g-button-text-color: #{$WHITE};
+  }
+
+  &_close {
+    @include option2(--g-button-width, 32px);
+    --g-button-height: var(--g-button-width);
+    --g-button-border-display: none;
+  }
+
+  &_soc {
+    @include option2(--g-button-width, 109px);
+    --g-button-height: var(--g-button-width);
+    box-sizing: border-box;
+
+    @include option2(--g-button-image-width, 73px);
+    --g-button-image-height: var(--g-button-image-width);
+  }
+
+  &_auth {
+    @include option2(--g-button-width, 218px);
+    @include option2(--g-button-height, 41px);
+    --g-button-text-color: $WHITE;
+    @include option2(--g-button-font-size, 48px);
+  }
+
+  &_gen {
+    @include option2(--g-button-width, 40px);
+    @include option2(--g-button-height, 30px);
+
+    @include option2(--g-button-image-width, 40px);
+    @include option2(--g-button-image-height, 30px);
+  }
+
+  &_gen:active {
+    --button-transform-image-active: rotate(-360deg);
+  }
+
+  &_create {
+    @include option2(--g-button-width, 309px);
+    @include option2(--g-button-height, 63.5px);
+    --g-button-text-color: $WHITE;
+    @include option2(--g-button-font-size, 25px);
+    --g-button-text-shadow: 0px 0px 4px #ff00ff;
+  }
+
+  &_createNav {
+    @include option2(--g-button-width, 41px);
+    @include option2(--g-button-height, 47px);
+  }
+
+  &_createNavMin {
+    @include option2(--g-button-width, 23px);
+    @include option2(--g-button-height, 25px);
+  }
+
+  &_modalPurple {
+    --g-button-border-bg: linear-gradient(to right, #5c1a99 -33.06%, #c0a9d7 20%, #c0a9d7 80%, #5c1a99 100%);
+
+    --g-button-borderInner-bg: #2f0038cc;
+  }
+
+  &_transparent {
+    --g-button-border-bg: none;
+    --g-button-border-overflow: visible;
+
+    --g-button-borderInner-bg: none;
+  }
+
+  &__block {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  &__text {
+    position: relative;
+    padding: var(--g-button-text-padding, 0);
+    font-size: var(--g-button-font-size, 32px);
+    font-weight: 400;
+    color: var(--g-button-text-color, #{$WHITE});
+    white-space: var(--g-button-white-space, nowrap);
+    text-transform: var(--g-button-text-transform, none);
+    background: var(--g-button-text-bg-color, unset);
+    text-shadow: var(--g-button-text-shadow, unset);
+
+    box-sizing: border-box;
+
+    @include mod("menu") {
+      z-index: 2;
+    }
+
+    @include mod("booster") {
+      position: absolute;
+      @include option2(bottom, -6px);
+      left: 0;
+      right: 0;
+      @include option2(width, 41px);
+      @include option2(height, 22px);
+      margin: 0 auto;
+      box-shadow:
+        0px 0px 1.5px 0px #12001f59,
+        0px 0px 1.5px 0px #12001f59,
+        0px 1.5px 3px 0px #9c007ba6 inset,
+        0px 1.5px 2.5px 0px #9c007ba6 inset,
+        0px 0.5px 1.5px 0px #d804ab59 inset;
+    }
+
+    @include mod("itemPlay") {
+      line-height: 0.8;
+    }
+  }
+
+  &__image {
+    position: var(--g-button-image-position, relative);
+    display: flex;
+    width: var(--g-button-image-width, 100%);
+    height: var(--g-button-image-height, 100%);
+    margin: var(--g-button-image-margin, unset);
+    box-sizing: border-box;
+    transform-origin: var(--g-button-image-transform-origin, center center);
+    overflow: var(--g-button-image-overflow, hidden);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: var(--g-button-img-transform-origin, center center);
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+
+      path {
+        transition: fill 0.3s ease-in-out;
+      }
+    }
+
+    @include mod("menu") {
+      left: 50%;
+      @include option2(bottom, 39px);
+      transform: translateX(-50%);
+    }
+  }
+
+  &__imageBlock {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    @include mod("menu") {
+      transform-origin: bottom center;
+    }
+  }
+
+  &__imageBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__imageImg {
+    @include mod("booster") {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: auto !important;
+    }
+  }
+
+  &__border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: var(--g-button-border-display, flex);
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    @include option2(padding, 1.26px);
+    @include option2(border-radius, 3px);
+    box-sizing: border-box;
+    overflow: var(--g-button-border-overflow, hidden);
+    background: var(
+      --g-button-border-bg,
+      linear-gradient(to right, #a02686 -33.06%, #e0acd5 20%, #e0acd5 80%, #a02686 100%)
+    );
+
+    @include mod("menu") {
+      top: -35%;
+      left: -4%;
+      width: 108%;
+      height: 167%;
+    }
+  }
+
+  &__borderInner {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    @include option2(border-radius, 2px);
+    overflow: hidden;
+    background: var(--g-button-borderInner-bg, #420234cc);
+    box-shadow:
+      0px 0px 14px 0px #12001f59,
+      0px 0px 10px 0px #12001f59,
+      0px 12.57px 37.72px 0px #9c007ba6 inset,
+      0px 12.57px 25.15px 0px #9c007ba6 inset,
+      0px 5.03px 15.09px 0px #d804ab59 inset;
+
+    @include mod("itemScore") {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include option2(width, 39px);
+      @include option2(height, 36px);
+      @include option2(border-radius, 0);
+      box-shadow: none;
+      transform: translate(-50%, -50%);
+    }
+
+    @include mod("modalPurple") {
+      box-shadow:
+        0px 0px 14px 0px #12001f59,
+        0px 0px 14px 0px #12001f59,
+        0px 12.57px 37.72px 0px #310094 inset,
+        0px 12.57px 25.15px 0px #6600a2 inset,
+        0px 5.03px 15.09px 0px #3c0084 inset;
+    }
+
+    @include mod("transparent") {
+      box-shadow: none;
+    }
+    @include mod("menu") {
+      box-shadow: none;
+    }
+  }
+
+  &__borderGlare {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-mask-size: 100% 100%;
+    background-color: #91106333;
+  }
+
+  &__borderGlareImg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    animation: button-glare 3s linear infinite;
+  }
+}

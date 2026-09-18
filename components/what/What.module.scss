@@ -1,0 +1,353 @@
+@use "@styles/base" as *;
+
+.what {
+  @mixin mod($mod) {
+    @include modifier("what", $mod) {
+      @content;
+    }
+  }
+  @mixin card($mod) {
+    @include modifier("what__card", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .what_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  position: relative;
+  background-color: $TEXT;
+
+  &__background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__content {
+    max-width: 100%;
+    margin: auto;
+    @include options(
+      (
+        width: (
+          $DESIGN-W,
+          $DESIGN-W-M,
+          $DESIGN-W-T,
+        ),
+        padding: (
+          100px 76px 130px,
+          100px 28px 144px,
+          150px 76px 150px,
+        ),
+      )
+    );
+    box-sizing: border-box;
+  }
+
+  &__title {
+    @extend %TITLE;
+    @include option(margin, 0 0 193px, 0 0 110px, 0 0 110px);
+    white-space: pre-line;
+    color: $WHITE;
+  }
+
+  &__list {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    @include option(grid-gap, 60px, 92px, 80px);
+  }
+
+  &__card {
+    position: relative;
+    display: block;
+    width: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    &_1 {
+      @include option(width, 1165px, 249px, 618px);
+    }
+
+    &_2 {
+      @include option(width, 922px, 325px, 808px);
+    }
+
+    &_3 {
+      @include option(width, 951px, 335px, 833px);
+    }
+  }
+
+  &__cardInfo {
+    position: relative;
+    @include option(padding, 4px 0 0 19px, 8px 0 0 9px, 14px 0 0 18px);
+    box-sizing: border-box;
+  }
+
+  &__cardTitle {
+    margin: 0;
+    font-family: $TITLE-FONT;
+    @include option(font-size, 80px, 28px, 70px);
+    line-height: 1.2;
+    white-space: pre-line;
+  }
+
+  &__cardIndex {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: $TITLE-FONT;
+    @include option(font-size, 20px, 12px, 24px);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  &__cardAbout {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__item {
+    position: absolute;
+    display: inline-block;
+    vertical-align: middle;
+    @include options(
+      (
+        padding: (
+          15px 30px,
+          10px 20px,
+          15px 30px,
+        ),
+        border-radius: 200px,
+      )
+    );
+    box-sizing: border-box;
+    text-align: center;
+    background: var(--what-item-bg);
+    transition-delay: var(--what-item-delay, 0);
+    @include MOBILE {
+      background: var(--what-item-bg-m, var(--what-item-bg));
+    }
+
+    &_11 {
+      @include options(
+        (
+          top: (
+            -67px,
+            -24px,
+            -29px,
+          ),
+          left: (
+            176px,
+            24px,
+            31px,
+          ),
+        )
+      );
+    }
+
+    &_12 {
+      @include options(
+        (
+          bottom: (
+            -38px,
+            -32px,
+            -38px,
+          ),
+          left: (
+            190px,
+            -8px,
+            190px,
+          ),
+        )
+      );
+    }
+
+    &_13 {
+      @include options(
+        (
+          top: (
+            -39px,
+            -50px,
+            -78px,
+          ),
+          left: (
+            516px,
+            193px,
+            474px,
+          ),
+        )
+      );
+    }
+
+    &_14 {
+      @include options(
+        (
+          bottom: (
+            140px,
+            -29px,
+            16.7px,
+          ),
+          right: (
+            109px,
+            -52px,
+            -109px,
+          ),
+        )
+      );
+    }
+
+    &_21 {
+      @include options(
+        (
+          top: (
+            -60px,
+            -53px,
+            -29px,
+          ),
+          left: (
+            176px,
+            7px,
+            232px,
+          ),
+        )
+      );
+    }
+
+    &_22 {
+      @include options(
+        (
+          top: (
+            -40px,
+            -24px,
+            -81px,
+          ),
+          left: (
+            471px,
+            164px,
+            474px,
+          ),
+        )
+      );
+    }
+
+    &_23 {
+      @include options(
+        (
+          bottom: (
+            -41px,
+            -54px,
+            -73px,
+          ),
+          left: (
+            303px,
+            223px,
+            93px,
+          ),
+        )
+      );
+    }
+
+    &_24 {
+      @include options(
+        (
+          top: (
+            74px,
+            32px,
+            81px,
+          ),
+          left: (
+            808px,
+            14px,
+            633px,
+          ),
+        )
+      );
+    }
+
+    &_31 {
+      @include options(
+        (
+          top: (
+            -37px,
+            -24px,
+            -60px,
+          ),
+          left: (
+            178px,
+            23px,
+            149px,
+          ),
+        )
+      );
+    }
+
+    &_32 {
+      @include options(
+        (
+          top: (
+            170px,
+            24px + 76px,
+            181px,
+          ),
+          left: (
+            502px,
+            197px,
+            662px,
+          ),
+        )
+      );
+    }
+
+    &_33 {
+      @include options(
+        (
+          top: (
+            -60px,
+            -51px,
+            -27px,
+          ),
+          left: (
+            658px,
+            197px,
+            513px,
+          ),
+        )
+      );
+    }
+
+    &_34 {
+      @include options(
+        (
+          top: (
+            170px,
+            67px,
+            158px,
+          ),
+          left: (
+            8px,
+            61px,
+            106px,
+          ),
+        )
+      );
+    }
+  }
+
+  &__itemText {
+    @extend %TEXT;
+    color: $WHITE;
+    white-space: pre-line;
+  }
+}

@@ -1,0 +1,70 @@
+@use "@styles/base" as *;
+
+.customProgress {
+  @mixin mod($mod) {
+    @include modifier("customProgress", $mod) {
+      @content;
+    }
+  }
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  &_vertical {
+    --lineInner-position: absolute;
+    --linePoint-top: auto;
+    --linePoint-left: 0;
+    --linePoint-margin: 0 auto;
+  }
+
+  &__line {
+    display: inline-block;
+    vertical-align: middle;
+
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+
+    background-color: var(--progress-bg, #fdfdfd10);
+    width: 100%;
+    height: 100%;
+  }
+
+  &__lineInner {
+    position: var(--lineInner-position, relative);
+    height: 100%;
+    width: 100%;
+    background-color: var(--progress-color, $WHITE);
+    transform-origin: 0 50%;
+
+    @include mod("vertical") {
+      bottom: 0;
+    }
+  }
+
+  &__linePoint {
+    position: absolute;
+    top: var(--linePoint-top, 0);
+    left: var(--linePoint-left, auto);
+    right: 0;
+    bottom: 0;
+    margin: var(--linePoint-margin, auto 0);
+    font-size: var(--progress-point-size, 12px);
+    width: 1px;
+    height: 1px;
+    cursor: pointer;
+  }
+
+  &__linePointBlock {
+    width: 1em;
+    height: 1em;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background-color: var(--progress-color, rgb(255, 255, 255));
+    transform: translate(-50%, -50%);
+  }
+
+  &_hidden {
+    opacity: 0;
+  }
+}

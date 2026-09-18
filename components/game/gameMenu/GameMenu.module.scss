@@ -1,0 +1,22 @@
+@use "@styles/base" as *;
+
+.gameMenu {
+  @mixin mod($mod) {
+    @include modifier("gameMenu", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gameMenu_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}

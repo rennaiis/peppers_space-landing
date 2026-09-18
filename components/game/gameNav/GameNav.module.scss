@@ -1,0 +1,261 @@
+@use "@styles/base" as *;
+
+.gameNav {
+  @mixin mod($mod) {
+    @include modifier("gameNav", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gameNav_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  position: absolute;
+  @include option2(top, 65px);
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  @include option2(width, 382px);
+  grid-gap: 1px;
+  max-width: 100%;
+  margin: 0 auto;
+  pointer-events: none;
+
+  @include TABLET {
+    @include option2(width, 482px);
+    max-height: 100%;
+    @include option2(padding, 0 15px);
+    box-sizing: border-box;
+  }
+
+  &__counter {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    vertical-align: top;
+    @include option2(width, 102px);
+    @include option2(height, 40px);
+
+    &_2 {
+      --counter-img-transform: translate(-44%, -50%);
+    }
+  }
+
+  &__counterBg {
+    position: absolute;
+    top: 0;
+    @include option2(right, -13px);
+    height: 100%;
+    pointer-events: none;
+  }
+
+  &__counterImg {
+    position: relative;
+    @include option2(width, 28px);
+    @include option2(height, 28px);
+    @include option2(margin, 0 15px 0 0);
+  }
+
+  &__counterImgImage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include option2(width, 62px);
+    @include option2(height, 60px);
+    transform: var(--counter-img-transform, translate(-50%, -50%));
+  }
+
+  &__counterText {
+    position: relative;
+    font-family: $ZAR;
+    @include option2(font-size, 24px);
+    text-align: center;
+    font-weight: 400;
+    color: $WHITE;
+  }
+
+  &__counterMore {
+    position: absolute;
+    @include option2(top, 38px);
+    @include option2(left, 43px);
+    font-family: $ZAR;
+    @include option2(font-size, 16px);
+    text-align: center;
+    font-weight: 400;
+    color: rgba($WHITE, 0.5);
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    position: relative;
+    width: 42%;
+    text-align: right;
+    pointer-events: all;
+  }
+
+  &__content {
+    position: absolute;
+    top: 0;
+    @include option2(right, 0);
+  }
+
+  &__about {
+    position: relative;
+    @include option2(width, 155px);
+    @include option2(padding, 9px 3px 9px 9px);
+    text-align: left;
+    box-sizing: border-box;
+
+    &:before,
+    &:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      box-sizing: border-box;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    &:before {
+      border: 3px solid $PINK;
+      backdrop-filter: blur(1px);
+    }
+
+    &:after {
+      top: 1px;
+      bottom: 1px;
+      left: 1px;
+      right: 1px;
+      border: 1px solid $WHITE;
+    }
+  }
+
+  &__aboutBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  &__aboutBgImg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    object-fit: cover;
+  }
+
+  &__aboutContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    z-index: 2;
+  }
+
+  &__aboutImage {
+    position: relative;
+    @include option2(width, 51px);
+    @include option2(height, 50px);
+    @include option2(margin, 0 11px 0 0);
+    @include option2(border-width, 1px);
+    box-sizing: border-box;
+
+    &:before,
+    &:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      box-sizing: border-box;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    &:before {
+      border: 3px solid $PINK;
+      backdrop-filter: blur(1px);
+    }
+
+    &:after {
+      top: 1px;
+      bottom: 1px;
+      left: 1px;
+      right: 1px;
+      border: 1px solid $WHITE;
+      z-index: 3;
+    }
+  }
+
+  &__aboutImageImg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 2;
+  }
+
+  &__aboutBlock {
+    position: relative;
+    @include option2(width, 83px);
+  }
+
+  &__aboutName {
+    @include option2(margin, 0 0 4px);
+    font-family: $WASTEBASED;
+    @include option2(font-size, 14px);
+    line-height: 1.1;
+    color: $WHITE;
+    text-shadow: 0px 0px 4px $PINK;
+  }
+
+  &__aboutLvl {
+    @include option2(margin, 0);
+    font-family: $ZAR;
+    @include option2(font-size, 20px);
+    line-height: 1;
+    color: $WHITE;
+  }
+
+  &__buttons {
+    display: inline-flex;
+    @include option2(grid-gap, 8px);
+  }
+
+  &__hero {
+    display: inline-block;
+  }
+
+  &__topButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    @include option2(top, -2px);
+    @include option2(grid-gap, 8px);
+  }
+}

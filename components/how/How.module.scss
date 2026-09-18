@@ -1,0 +1,47 @@
+@use "@styles/base" as *;
+
+.how {
+  @mixin mod($mod) {
+    @include modifier("how", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .how_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  position: relative;
+  margin: auto;
+  max-width: 100%;
+  @include options(
+    (
+      width: (
+        $DESIGN-W,
+        $DESIGN-W-M,
+        $DESIGN-W-T,
+      ),
+      padding: (
+        100px 68px 104px,
+        100px 28px,
+        150px 75px 182px,
+      ),
+    )
+  );
+  box-sizing: border-box;
+
+  &__title {
+    @extend %TITLE;
+    @include option(margin, 0 0 0px, 0 0 156px, 0 0 265px);
+    white-space: pre-line;
+  }
+
+  &__image {
+    @include option(height, 653px, 340px, 533px);
+    width: 100%;
+    object-fit: contain;
+  }
+}

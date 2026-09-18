@@ -1,0 +1,90 @@
+@use "@styles/base" as *;
+
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include options((
+    gap: (21px, 25px)
+  ));
+  @include NOT-DESKTOP{
+    flex-direction: row;
+    max-width: 99%;
+  }
+  &__content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include options((
+      max-width: (330px, 220px),
+    ));
+    @include NOT-DESKTOP{
+      align-items: flex-start 
+    }
+  }
+  &__title{
+    @extend %YELLOW-TITLE;
+    white-space: nowrap;
+    text-align: center;
+    @include NOT-DESKTOP{
+      text-align: start;
+      white-space: unset;
+     }
+  }
+  &__titleNum{
+    @extend %YELLOW-TITLE;
+    @include options((
+      font-size: (48px, 30px)
+    ));
+    font-weight: 800
+  }
+  &__text{
+    @extend %RESULTS-TEXT;
+     text-align: center;
+     @include options((
+        max-width: (219px, 209px),
+        margin-top: (12px, 7px)
+     ));
+     @include NOT-DESKTOP{
+      text-align: start
+     }
+  }
+
+  &__image{
+    @include option(width, 203, 149);
+    img{
+      width: 100%;
+      height: 100%
+    }
+  }
+  &_mark{
+    @include options((
+      margin-top: (0px, 6px),
+      gap: (20px, 10px)
+    ));
+    .result__title{
+      @include options((
+        font-size: (40px, 45px)
+      ))
+    }
+    .result__text{
+      @include options((
+        margin-top: (5px, 0px)
+      ))
+    }
+    
+  }
+  
+  @mixin mod($mod) {
+    @include modifier("result", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .result_#{$mod} & {
+        @content;
+      }
+    }
+  }
+}

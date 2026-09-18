@@ -1,0 +1,29 @@
+@use "sass:math";
+
+@function vw($v) {
+  $vw-context: 1920 * 0.01 * 1px;
+  @return math.div($v, $vw-context) * 1vw;
+  @return $v;
+}
+
+%SCROLLABLE {
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar-track {
+    width: vw(10px);
+    border-radius: vw(10px);
+    background-color: rgba(#efefef, 1);
+  }
+  &::-webkit-scrollbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: vw(10px);
+    background: rgba(#efefef, 0);
+  }
+  &::-webkit-scrollbar-thumb {
+    width: vw(10px);
+    border-radius: vw(10px);
+    background-color: rgba(#ababab, 1);
+  }
+}

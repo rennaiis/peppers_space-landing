@@ -1,0 +1,224 @@
+@use "sass:math";
+@use "sass:meta";
+@use "sass:list";
+@use "sass:map";
+@use "sass:string";
+@use "@styles/constants" as *;
+
+@function image($path, $topCount: 2) {
+  @return url("~/static/images/#{$path}");
+}
+
+/**
+ * flash to keyframes functions
+ */
+@function frame2percent($frame, $totalFrames) {
+  @return math.percentage(math.div($frame - 1, $totalFrames - 1));
+}
+
+@function frames2time($frames, $fps: 25) {
+  @return math.div($frames * 1, $fps * 1s);
+}
+
+/**
+ * Atlas
+**/
+@function atlas-position($x, $w, $imgW) {
+  @if $imgW == $w {
+    @return 0;
+  } @else {
+    @return math.percentage(strip-unit(math.div($x, $imgW - $w)));
+  }
+}
+
+@mixin atlas($x, $y, $w, $h, $imgW, $imgH, $scale: 1) {
+  background-position: atlas-position($x, $w, $imgW) atlas-position($y, $h, $imgH);
+  width: to-em($w, $scale);
+  height: to-em($h, $scale);
+}
+
+/**
+ * Keyframes
+**/
+@mixin keyframes($frames, $row, $w: 25%, $h: 25%, $offset: 0.0001%) {
+  $frame: math.div(100%, list.length($frames));
+  @for $i from 1 through list.length($frames) {
+    @if $i == list.length($frames) {
+      $offset: 0%;
+    }
+
+    #{fixed(($i - 1) * $frame)},
+    #{fixed($i * $frame) - $offset} {
+      background-position: ((list.nth($frames, $i) % $row) * $w) (floor(math.div(list.nth($frames, $i), $row)) * $h);
+    }
+  }
+}
+
+@mixin keyframes2($keyframes, $dx, $dy) {
+  @for $i from 1 to list.length($keyframes) {
+    $frame: list.nth($keyframes, $i);
+    $next_frame: list.nth($keyframes, $i + 1);
+    $offset: 0.01%;
+
+    @if $i == list.length($keyframes) - 1 {
+      $offset: 0%;
+    }
+
+    #{fixed(list.nth($frame, 1))},
+    #{fixed(list.nth($next_frame, 1)) - $offset} {
+      background-position: list.nth($frame, 2) * $dx list.nth($frame, 3) * $dy;
+    }
+  }
+}
+
+@function fixed($val, $signs: 100) {
+  @return math.div(round($signs * $val), $signs);
+}
+
+@function strip-unit($number) {
+  @if meta.type-of($number) == "number" and not math.is-unitless($number) {
+    @return math.div($number, $number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@function split($str, $d) {
+  $index: string.index($str, $d);
+  $list: ();
+  @while $index {
+    $str1: string.slice($str, 1, $index - 1);
+
+    $str: string.slice($str, $index + 1);
+    @if string.length($str1) > 0 {
+      $list: list.append($list, $str1);
+    }
+    $index: string.index($str, $d);
+  }
+  $list: list.append($list, $str);
+  @return $list;
+}
+
+@function split-pseudo-class($str) {
+  $arr: string.split($str, ":");
+  @return $arr;
+}
+
+@function to-em($val, $fontSize, $precision: 1000) {
+  @if meta.type-of($val) == "list" {
+    @for $i from 1 through list.length($val) {
+      $val: list.set-nth($val, $i, to-em(list.nth($val, $i), $fontSize));
+    }
+
+    @return $val;
+  } @else if meta.type-of($val) == "string" {
+    @return $val;
+  }
+  @return fixed(strip-unit(math.div($val, $fontSize)), $precision) * 1em;
+}
+
+@function to-rem($val, $precision: 1000) {
+  @if meta.type-of($val) == "list" {
+    @for $i from 1 through list.length($val) {
+      $val: list.set-nth($val, $i, to-rem(list.nth($val, $i)));
+    }
+
+    @return $val;
+  } @else if meta.type-of($val) == "string" {
+    @return $val;
+  }
+  @return fixed(strip-unit(math.div($val, $PIC)), $precision) * 1rem;
+}
+
+@function adaptive($from, $to, $units) {
+  @if meta.type-of($from) == "list" {
+    @for $i from 1 through list.length($from) {
+      $from: list.set-nth(
+        $from,
+        $i,
+        adaptive(
+          list.nth($from, $i),
+          list.nth($to, ($i - 1) % list.length($to) + 1),
+          list.nth($units, ($i - 1) % list.length($units) + 1)
+        )
+      );
+    }
+
+    @return $from;
+  } @else if meta.type-of($from) == "number" and list.index(("", "px"), math.unit($from)) {
+    $val: fixed(math.div(strip-unit($from), strip-unit(list.nth($to, 1))) * 100, 1000);
+    @if $val == 0 {
+      @return $val;
+    }
+    @return $val * list.nth($units, 1);
+  } @else {
+    @return $from;
+  }
+}
+
+@function vh($v) {
+  @return adaptive($v, $DESIGN-H, 1vh);
+}
+
+@function vw($v) {
+  @return adaptive($v, $DESIGN-W, 1vw);
+}
+
+@function vhm2($v) {
+  @return adaptive($v, $DESIGN-H-M-2, 1vh);
+}
+
+@function vwm2($v) {
+  @return adaptive($v, $DESIGN-W-M-2, 1vw);
+}
+
+@function r-vw($v) {
+  @return adaptive($v, $DESIGN-W-R, 1vmin);
+}
+
+@function vh-vw($v) {
+  @return adaptive($v, $DESIGN-H $DESIGN-W, 1vh 1vw);
+}
+
+@function vwm($v) {
+  @return adaptive($v, $DESIGN-W-M, 1vw);
+}
+
+@function vhm($v) {
+  @return adaptive($v, $DESIGN-H-M, 1svh);
+}
+
+@function vwt($v) {
+  @return adaptive($v, $DESIGN-W-T, 1vw);
+}
+
+@function vht($v) {
+  @return adaptive($v, $DESIGN-H-T, 1svh);
+}
+
+@function vh-vw($v) {
+  @return adaptive($v, $DESIGN-H $DESIGN-W, 1vh 1vw);
+}
+
+@function vh-vw-m($v) {
+  @return adaptive($v, $DESIGN-H-M $DESIGN-W-M, 1vh 1vw);
+}
+
+@function _get-nth($prop, $index) {
+  @for $i from 1 through list.length($index) {
+    @if list.length($prop) >= list.nth($index, $i) {
+      @return list.nth($prop, list.nth($index, $i));
+    }
+  }
+  @return 0;
+}
+
+@function get-trbl($prop, $side) {
+  $trbl: (
+    t: 1,
+    r: 2 1,
+    b: 3 1,
+    l: 4 2 1,
+  );
+  @return _get-nth($prop, map.get($trbl, $side));
+}

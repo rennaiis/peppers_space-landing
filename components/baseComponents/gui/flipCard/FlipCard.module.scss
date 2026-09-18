@@ -1,0 +1,120 @@
+@use "@styles/base" as *;
+
+.flipCard {
+  @mixin mod($mod) {
+    @include modifier("flipCard", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .flip-card_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  $time: 1s;
+  $timeC: 1s;
+  position: relative;
+  overflow: visible;
+
+  width: 37vh;
+  height: 50vh;
+  margin: 0 auto;
+
+  &__content {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    overflow: visible;
+
+    @include mod("corner") {
+      perspective: 1000px;
+      //TODO: вот тут надо подумать, как настроить высоту контейнера, чтоб скролла появлалось
+    }
+  }
+
+  &__side {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backface-visibility: hidden;
+    transition: $time ease-in-out;
+    overflow: hidden;
+
+    &_front {
+      transform: rotateY(0deg);
+    }
+
+    &_back {
+      transform: rotateY(180deg);
+    }
+
+    @include mod("corner") {
+      transition: $timeC ease-in-out;
+      &:after {
+        content: "";
+        clear: both;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: $timeC * 0.5 ease-in-out $timeC * 0.5;
+      }
+
+      &_front {
+        transform-origin: 0 100%;
+        opacity: 1;
+
+        &:after {
+          opacity: 0;
+          background: linear-gradient(45deg, rgba(#5c5c5c, 1), rgba(#5c5c5c, 0));
+        }
+      }
+
+      &_back {
+        transform-origin: 0 100%;
+        transform: rotate(-90deg) rotateY(180deg);
+        opacity: 0;
+
+        &:after {
+          opacity: 1;
+          background: linear-gradient(45deg, rgba(white, 0), rgba(white, 1), rgba(white, 0));
+        }
+      }
+    }
+
+    @include mod("rotate") {
+      &_front {
+        transform: rotateY(-180deg);
+      }
+      &_back {
+        transform: rotateY(0deg);
+      }
+    }
+    @include mod("rotate.flipCard_corner") {
+      &_front {
+        transform: rotate(-90deg) rotateY(-180deg);
+        filter: drop-shadow(0 0 50px rgba(#5c5c5c, 0.5));
+        opacity: 0;
+        &:after {
+          opacity: 1;
+        }
+      }
+      &_back {
+        transform: rotate(0deg) rotateY(0deg);
+        filter: drop-shadow(0 0 0 rgba(#5c5c5c, 0.5));
+        opacity: 1;
+        &:after {
+          opacity: 0;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "pixi-filters": "^6.1.4",
+    "pixi.js": "^8.6.6",
+    "@esotericsoftware/spine-pixi-v8": "^4.2.98"
+  }
+}

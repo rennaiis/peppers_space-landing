@@ -1,0 +1,266 @@
+@import "../constants";
+
+.apps-list {
+  &__instructions {
+    @extend %SCROLLABLE;
+    position: relative;
+    vertical-align: top;
+    flex: 1 1 650px;
+    box-sizing: border-box;
+    background-color: #efefef;
+  }
+
+  &__instructions-block {
+    width: vw(650px);
+    padding: vw(60px) vw(60px) vw(70px) vw(37px);
+    box-sizing: border-box;
+    background-color: #efefef;
+  }
+
+  &__section-content {
+    padding: vw(44px) 0 0;
+
+    &_info {
+      padding: vw(24px) 0 0;
+    }
+
+    &_faq {
+      padding: vw(51px) 0 vw(80px);
+    }
+  }
+
+  &__section-title {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-size: vw(26px);
+    line-height: vw(36px);
+    font-weight: 400;
+    text-align: left;
+    cursor: pointer;
+    user-select: none;
+
+    &_info {
+      font-size: vw(24px);
+      line-height: vw(26px);
+      text-transform: uppercase;
+    }
+  }
+
+  &__section-button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: vw(26px);
+    height: vw(14px);
+    margin: auto 0;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: transform 0.3s;
+    transform: rotateX(0turn);
+
+    &_active {
+      transform: rotateX(0.5turn);
+    }
+
+    @at-root %APPS-LIST__SECTION-BUTTON {
+      position: absolute;
+      content: "";
+      top: 0;
+      width: vw(2px);
+      height: vw(19px);
+      border-radius: vw(2px);
+      background-color: #000000;
+      transform-origin: top center;
+    }
+    &:before {
+      @extend %APPS-LIST__SECTION-BUTTON;
+      left: -1px;
+      transform: rotate(-45deg);
+    }
+    &:after {
+      @extend %APPS-LIST__SECTION-BUTTON;
+      right: -1px;
+      transform: rotate(45deg);
+    }
+  }
+
+  &__faq-item-content-title,
+  &__faq-item-content-image,
+  &__faq-item-content-text,
+  &__instructions-info,
+  &__instructions-item,
+  &__instructions-item-title,
+  &__instructions-item-text {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__instructions-item {
+    width: 100%;
+    margin: 0 0 vw(24px);
+  }
+
+  &__instructions-item-title {
+    margin: 0 0 vw(8px);
+    font-size: vw(18px);
+    line-height: vw(26px);
+  }
+
+  &__instructions-item-text {
+    margin: 0 0 vw(8px);
+    font-size: vw(16px);
+    line-height: vw(26px);
+
+    ul {
+      padding: 0 0px 0px vw(54px);
+      margin: 0;
+      list-style-type: number;
+    }
+    li {
+      &::marker {
+        color: #424242;
+      }
+    }
+  }
+
+  &__instruction-item-image {
+    width: 100%;
+  }
+
+  &__faq-item-content,
+  &__instructions-content,
+  &__instructions-info,
+  &__section-block {
+    overflow: hidden;
+    transition: height 0.3s ease-out;
+  }
+
+  &__faq-item {
+    position: relative;
+    cursor: pointer;
+  }
+
+  &__faq-item-title {
+    font-size: vw(16px);
+    line-height: vw(40px);
+    box-sizing: border-box;
+
+    &::after {
+      content: "";
+      display: block;
+      border-bottom: 1px solid #424242;
+      transition: transform 0.3s ease-in;
+      transform-origin: 0% 50%;
+      .apps-list__faq-item_active & {
+        transform: scaleX(0);
+        transition-timing-function: ease-out;
+      }
+    }
+  }
+
+  &__faq-item-button {
+    position: absolute;
+    top: vw(14px);
+    right: 0;
+    width: vw(14px);
+    height: vw(14px);
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    pointer-events: none;
+    transition: transform 0.3s ease-in-out;
+    &_active {
+      transform: rotate(-180deg);
+    }
+
+    @at-root %APPS-LIST__FAQ-ITEM-BUTTON {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      right: 0;
+      border-left: vw(2px) solid;
+      width: 0;
+      height: 100%;
+      margin: 0 auto;
+      color: #424242;
+      transition: inherit;
+    }
+    &:before {
+      @extend %APPS-LIST__FAQ-ITEM-BUTTON;
+      transform: rotate(90deg);
+    }
+    &:after {
+      @extend %APPS-LIST__FAQ-ITEM-BUTTON;
+      transform: rotate(0deg);
+      @at-root .apps-list__faq-item-button_active:after {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  &__faq-item-content-block {
+    padding: vw(17px) vw(24px) vw(32px);
+
+    .apps-list__faq-item_1 & {
+      padding: vw(17px) 0 vw(32px);
+    }
+  }
+
+  &__faq-item-content-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: vw(42px);
+    margin: 0 0 vw(10px);
+    font-size: vw(18px);
+    line-height: vw(26px);
+
+    span {
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: vw(22px);
+      height: vw(22px);
+      margin: 0 vw(6px) 0 0;
+      border-radius: 50%;
+      font-size: vw(12px);
+      color: #ffffff;
+      background-color: #ff4d12;
+    }
+  }
+
+  &__faq-item-content-image {
+    width: 100%;
+    margin: 0 0 vw(17px);
+  }
+
+  &__faq-item-content-text {
+    display: block;
+    max-width: 100%;
+    margin: 0 0 vw(30px);
+    font-size: vw(16px);
+    line-height: vw(26px);
+  }
+
+  &__instructions-info {
+    margin: 0 0 vw(40px);
+  }
+
+  &__instructions-info-title {
+    margin: 0 0 vw(8px);
+    font-size: vw(20px);
+    line-height: vw(26px);
+  }
+}

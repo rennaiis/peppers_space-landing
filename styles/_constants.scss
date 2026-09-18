@@ -1,0 +1,96 @@
+/**
+ * breakpoints
+ */
+$MOBILE: 320px;
+$TABLET: 768px;
+$DESKTOP: 1025px;
+$DESKTOP-BIG: 1440px;
+
+/**
+ * font-family
+ */
+$BASE-FONT: Montserrat, sans-serif;
+$FOOTER-FONT: Roboto, sans-serif;
+$TITLE-FONT: $BASE-FONT;
+$APP-FONT: SFUI, sans-serif;
+
+/**
+ * color
+ */
+$WHITE: #ffffff;
+$BLACK: #000000;
+$RED: #E3010F;
+$YELLOW: #FFD600;
+$DARK-YELLOW: #FFF100;
+$LIGHT-GREY: #F5F6FA;
+$DARK-GREY: #0F1114;
+$LIGHT-BLACK: #141414;
+$GREY: #3B3B3B;
+$GREY-2: #424242;
+$GREY-MEDIUM: #A6A6A6;
+$GREEN: #00e622;
+$PINK-DARK: #A27D7E;
+
+$GREY-TEXT: #7F858A;
+$BG: $WHITE;
+$FG: $BLACK;
+
+$TEXT: $FG;
+
+/**
+ * z-layer
+ */
+$z-modal: 1000;
+$z-preloader: 500;
+$z-close-btn-modal: 1;
+$z-carousel: 1;
+$z-header: 100;
+$z-background: 0;
+
+
+/**
+ * font-weight
+ */
+$FW-NORMAL: 400;
+$FW-BOLD: 700;
+$FW-THIN: 100;
+$FW-EXTRA_LIGHT: 200;
+$FW-ULTRA_LIGHT: 200;
+$FW-LIGHT: 300;
+$FW-MEDIUM: 500;
+$FW-SEMI_BOLD: 600;
+$FW-DEMI_BOLD: 600;
+$FW-EXTRA_BOLD: 800;
+$FW-ULTRA_BOLD: 800;
+$FW-BLACK: 900;
+$FW-HEAVY: 900;
+
+/**
+ * other
+ */
+$DESIGN-W-R: 2200px;
+$DESIGN-W: 1440px;
+$DESIGN-H: 780px;
+$DESIGN-W-M: 414px;
+$DESIGN-H-M: 911px;
+$DESIGN-W-T: $DESIGN-W-M;
+$DESIGN-H-T: $DESIGN-H-M;
+$DESIGN-W-M-2: 402px;
+$DESIGN-H-M-2: 874px;
+$PIC: 20px;
+$CELL-W: 194px;
+
+$CONTENT-W: calc(1440px - 153px - 153px);
+$CONTENT-W-M: 374px;
+
+$CUBIC_FUNC: cubic-bezier(0, 0.86, 0.47, 1.53);
+$B-EASE: cubic-bezier(0.17, 0.89, 0.48, 1.33);
+$M-EASE: ease-in-out;
+
+$iosTop: 35px;
+
+$gameMenuBottom: 32px;
+$coeffIOS: 35px;
+$coeffIOS2: $coeffIOS - 30px;
+$coeffIOS3: $coeffIOS - 25px;
+$coeffIOS4: $coeffIOS - 20px;

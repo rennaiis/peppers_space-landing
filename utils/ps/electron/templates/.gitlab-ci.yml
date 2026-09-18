@@ -1,0 +1,89 @@
+# .gitlab-ci.yml
+
+default:
+  image: node:20-alpine
+  tags:
+    - frontend
+
+  cache:
+    - &global_cache_node_mods
+      key:
+        files:
+          - yarn-lock.json
+      paths:
+        - node_modules/
+      policy: pull
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH != "master" && $CI_COMMIT_BRANCH != "dev"
+      when: never
+    - changes:
+        - yarn.lock
+      variables:
+        YARN_CHANGES: 1
+    - when: always
+  cache:
+    - <<: *global_cache_node_mods
+      when: on_success
+      policy: pull-push
+    - key: cache-$CI_COMMIT_REF_SLUG
+      paths:
+        - .next/cache/
+      when: on_success
+      policy: pull-push
+
+  script:
+    - if [ "$YARN_CHANGES" = "1" ] || [ ! -d "node_modules" ]; then yarn install --ignore-scripts; fi
+    - yarn run build
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - out
+
+deploy:
+  stage: deploy
+  only:
+    - master
+    - dev
+
+  when: on_success
+  cache: {}
+  needs:
+    - job: build
+      artifacts: true # grabs dist/
+  script:
+    - apk add --no-cache rsync
+    - apk add --no-cache zip
+    - export PROJECT_ID=$(node -p "require('./package.json').project_id")
+    - export PROJECT_YEAR=$(node -p "'20$PROJECT_ID'.substr(0,4)")
+    - OUTPUT_DIR=/mnt/diskstation/web/dev/$PROJECT_YEAR/$PROJECT_ID
+    - HTDOCS=${OUTPUT_DIR}/htdocs/
+    - echo $HTDOCS
+    - rsync -rv out/ $HTDOCS
+    - chmod -R u=rwX,g=rwX,o=rwX $HTDOCS
+    - echo "$(date +"%d.%m.%Y %T.%N") ${GITLAB_USER_NAME} <${GITLAB_USER_LOGIN}>" >> "${HTDOCS}/deploy-log.txt"
+    - echo $(date +%s) > "${HTDOCS}/version"
+    - cp "${HTDOCS}/version" out/
+    - zip -FSr -5 "${OUTPUT_DIR}/builds/build.zip" out/*
+
+electron:
+  stage: deploy
+  only:
+    refs:
+      - master
+      - dev
+    changes:
+      - electron/**/*
+  cache: {}
+  allow_failure: true
+  script:
+    - apk add --no-cache zip
+    - export PROJECT_ID=$(node -p "require('./package.json').project_id")
+    - export PROJECT_YEAR=$(node -p "'20$PROJECT_ID'.substr(0,4)")
+    - zip -FSr -5 /mnt/diskstation/web/dev/$PROJECT_YEAR/$PROJECT_ID/builds/build-electron.zip electron/*.js electron/*/*.js

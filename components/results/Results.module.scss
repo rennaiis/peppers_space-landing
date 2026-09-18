@@ -1,0 +1,108 @@
+@use "@styles/base" as *;
+
+.results {
+  width: 100%;
+  @include content();
+  &__bgItem{
+    &_rocket{
+      @include options((
+        top: -133px,
+        right: 20px,
+        width: 294px,
+      ));
+      @include NOT-DESKTOP{
+        display: none;
+      }
+    }
+    &_star1{
+      @include options((
+        top: -140px,
+        right: 88px,
+        width: 61px,
+      ));
+      @include NOT-DESKTOP{
+        display: none;
+      }
+    }
+    &_star2{
+      @include options((
+        top: -92px,
+        right: 345px,
+        width: 27px,
+      ));
+      @include NOT-DESKTOP{
+        display: none;
+      }
+    }
+    &_star3{
+      @include options((
+        top: 22px,
+        right: 290px,
+        width: 43px,
+      ));
+      @include NOT-DESKTOP{
+        display: none;
+      }
+    }
+    &_star4{
+      @include options((
+        top: 30px,
+        right: 60px,
+        width: 19px,
+      ));
+      @include NOT-DESKTOP{
+        display: none;
+      }
+    }
+  }
+  &__content{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    @include options((
+      padding-top: (79px, 45px),
+      padding-bottom: (90px, 57px),
+    ));
+  };
+ 
+  &__title{
+    @extend %SUBTITLE;
+    color: $WHITE;
+  };
+  
+  &__list{
+    display: flex;
+    align-self: start; 
+    align-items: start;
+    padding: 0;
+    @include options((
+      margin-top: (73px, 50px),
+      gap: (33px, 27px),
+      padding-left: (44px, 0),
+      padding-right: (52px, 0),
+    ));
+    @include NOT-DESKTOP{
+      flex-direction: column;
+    }
+  };
+
+  &__button{
+    align-self: center;
+    @include options((
+      margin-top: (80px, 36px),
+    )); 
+  }
+
+  @mixin mod($mod) {
+    @include modifier("results", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .results_#{$mod} & {
+        @content;
+      }
+    }
+  }
+}

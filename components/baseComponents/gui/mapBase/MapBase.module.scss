@@ -1,0 +1,126 @@
+@use "@styles/base" as *;
+
+.mapBase {
+  @mixin mod($mod) {
+    @include modifier("mapBase", $mod) {
+      @content;
+    }
+  }
+  @mixin point($mod) {
+    @include modifier("mapBase__point", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .mapBase_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70vh; //TODO магическое число)
+  overflow: hidden;
+
+  pointer-events: none;
+  touch-action: none;
+
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(green, 0.1);
+  }
+
+  &__zoom {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    font-size: 15px;
+    left: 1em;
+    pointer-events: auto;
+    touch-action: auto;
+  }
+
+  &__points {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    touch-action: none;
+  }
+
+  &__point {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: auto;
+    touch-action: auto;
+    transform: var(--scale, none);
+  }
+
+  &__pointCircle {
+    position: absolute;
+    top: -11px;
+    left: -11px;
+    width: 22px;
+    height: 22px;
+  }
+
+  &__pointCircleBlock {
+    width: 100%;
+    height: 100%;
+    background-color: #3c5604;
+    border-radius: 50%;
+  }
+
+  &__pointTitle {
+    position: absolute;
+    top: 50%;
+    left: 21px;
+    width: 261px;
+    font-size: 34px;
+    line-height: 34px;
+    color: #be9132;
+    font-weight: 700;
+    transform: translateY(-50%);
+
+    @include mod("projects") {
+      left: auto;
+      right: 21px;
+      text-align: right;
+
+      width: 50vw;
+      max-width: 520px;
+    }
+
+    @include point("left") {
+      left: auto;
+      right: 21px;
+      text-align: right;
+    }
+
+    @include point("bottom") {
+      top: 21px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    @include point("top") {
+      top: auto;
+      bottom: 21px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+  }
+}

@@ -1,0 +1,240 @@
+@use "@styles/constants" as *;
+@use "@styles/mixins" as *;
+
+/**
+ * Обычный текст
+ */
+
+
+%DEFAULT {
+  font-family: $BASE-FONT;
+  @include option(font-size, $PIC);
+  color: $TEXT;
+  font-weight: 600;
+}
+%BUTTON-TEXT{
+  font-family: $BASE-FONT;
+  @include option(font-size, $PIC);
+  color: $TEXT;
+  font-weight: 600;
+  
+
+}
+@mixin MENU {
+  font-family: $BASE-FONT;
+  color: $WHITE;
+  @include options((
+    font-size: (12px, 12px)
+  ));
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  text-transform: uppercase;
+  
+}
+
+%LIGHT-CAPTION{
+  font-family: $BASE-FONT;
+  @include options(
+    (
+      font-size: (13px, 13px),
+      line-height: (18.2px, 18.2px)
+    )
+  );
+  font-weight: 400;
+  color: $WHITE;
+}
+
+%BIG-DEFAULT{
+  font-family: $BASE-FONT;
+  @include options ((
+    font-size: (21px, 21px)
+  ));
+  font-weight: 600;
+}
+%RED-HIGHLIGHT{
+  font-family: $BASE-FONT;
+  @include option(font-size,26px, 22px);
+  font-weight: 700;
+  color: $RED;
+}
+%WHITE_CAPTION{
+  font-family: $BASE-FONT;
+  @include option(font-size,24px, 21px);
+  font-weight: 400;
+  color: $WHITE;
+  text-decoration: underline;
+}
+%CARD-TITLE{
+  margin: 0;
+  font-family: $BASE-FONT;
+  @include options((
+    font-size: (13.55px, 17px),
+    line-height: (1.2em)
+  ));
+  font-weight: 700;
+  color: $LIGHT-BLACK;
+  text-transform: uppercase;
+}
+%CARD-TEXT{
+  margin: 0;
+  font-family: $BASE-FONT;
+  @include options((
+    font-size: (13px, 16px),
+    line-height: (1.3em, 1.35em)
+  ));
+  font-weight: 400;
+  color: $GREY;
+  
+}
+
+%CARD-LIGHT-TEXT{
+  font-family: $BASE-FONT;
+  margin: 0;
+  @include options((
+    font-size: (16px, 16px),
+  ));
+  font-weight: 400;
+  color: $GREY;
+  line-height: 1.2em;
+}
+%MEDIUM-TITLE {
+  margin: 0;
+  font-family: $BASE-FONT;
+  font-family: $TITLE-FONT;
+  @include option(font-size,58.73px, 32px);
+  line-height: 0.7em;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.012em;
+}
+
+%BIG-TITLE {
+  margin: 0;
+  font-family: $BASE-FONT;
+  color: $WHITE;
+  @include options((
+    font-size:(67.29px, 51px),
+    letter-spacing: (0.023em, 0.035em)  
+  ));
+  line-height: 1em;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  letter-spacing: 0.035em;
+}
+
+%APP-TITLE {
+  font-family: $APP-FONT;
+  font-weight: 600;
+  @include option(font-size,22px);
+  letter-spacing: 0.01em;
+}
+
+%APP-CAPTION {
+  letter-spacing: 0.03em;
+  font-family: $APP-FONT;
+  font-weight: 500;
+  @include option(font-size,11px);
+}
+
+%TITLE {
+  margin: 0;
+  color: $WHITE;
+  font-family: $BASE-FONT;
+  @include options(
+    (
+      font-size: (42.74px, 25px),
+    )
+  );
+  line-height: 1;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+%SUBTITLE {
+  margin: 0;
+  font-family: $BASE-FONT;
+  @include options((
+    font-size: (55px, 34px),
+    margin-left: (-5px, 0),
+    letter-spacing: (0, -0.01em)
+  ));
+  line-height: 1;
+  font-weight: 700;
+  
+}
+
+%SUBTITLE-SMALL{
+  @extend %SUBTITLE;
+  color: $WHITE;
+  letter-spacing: 0.0em;
+  line-height: 1.16em;
+  @include options((
+    font-size: (64.95px, 34px)
+  ));
+}
+
+%FOOTER-LIGHT{
+  line-height: 1.02em;
+  
+  font-family: $FOOTER-FONT;
+  @include options((
+    font-size: (10px),
+    font-weight: 400,
+    line-height: 15px
+  ));
+  p{
+    margin: 0;
+  }
+}
+
+%FOOTER-TEXT{
+  font-family: $FOOTER-FONT;
+  @include options((
+    font-size: (14px),
+    font-weight: 400,
+    line-height: 15px
+  ));
+  margin: 0
+}
+
+%SMALL-TEXT{
+  @include option(font-size, 17px, 15px);
+  font-weight: 400;
+  letter-spacing: 0em;
+}
+
+%TEXT {
+  font-family: $BASE-FONT;
+  @include option(font-size, 14px, 9px);
+  line-height: 1.3;
+  font-weight: 500;
+}
+%STEP-TEXT{
+  font-family: $BASE-FONT;
+  font-weight: 700;
+  line-height: 1.42em;
+  @include options((
+    font-size: (17px, 17px),
+  ));
+}
+%RESULTS-TEXT{
+  font-family: $BASE-FONT;
+  font-weight: 400;
+  @include options((
+    font-size: (18px, 17px),
+    line-height: (23px)
+  ));
+}
+%YELLOW-TITLE{
+  font-family: $BASE-FONT;
+   @include options((
+    font-size: (48px, 45px),
+    letter-spacing: (-0.03em, -2px)
+  ));
+  line-height: 0.9em;
+  font-weight: 800;
+  color: $YELLOW
+}

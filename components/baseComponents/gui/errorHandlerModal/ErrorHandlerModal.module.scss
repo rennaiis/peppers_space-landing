@@ -1,0 +1,114 @@
+@use "@styles/base" as *;
+.errorHandlerModal {
+  @mixin mod($mod) {
+    @include modifier("errorHandlerModal", $mod) {
+      @content;
+    }
+  }
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: $z-modal + 100;
+
+  &__bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($BLACK, 0.7);
+
+    @include animation-option(
+      ".errorHandlerModal",
+      (
+        opacity: (
+          0,
+          1,
+        ),
+      )
+    );
+  }
+
+  &__block {
+    position: relative;
+    @include option(width, 335px);
+    @include option(padding, 32px 24px 24px);
+    @include option(border-radius, 32px);
+    background-color: $WHITE;
+    box-sizing: border-box;
+    text-align: center;
+
+    @include animation-option(
+      ".errorHandlerModal",
+      (
+        opacity: (
+          0,
+          1,
+        ),
+        transform: (
+          scale(0.7),
+          scale(1),
+        ),
+      )
+    );
+  }
+
+  &__title {
+    @include option(margin, 0 auto 16px);
+    @include option(font-size, 24px);
+    @include option(line-height, 32px);
+    font-weight: 700;
+    white-space: pre-line;
+    color: $BLACK;
+
+    @include animation-option(
+      ".errorHandlerModal",
+      (
+        opacity: (
+          0,
+          1,
+        ),
+        transform: (
+          translateY(-50%),
+          translateY(0),
+        ),
+      ),
+      $ease: cubic-bezier(0.01, 0.45, 0.25, 1.3),
+      $delay: 0.3s
+    );
+  }
+
+  &__content {
+    @include animation-option(
+      ".errorHandlerModal",
+      (
+        opacity: (
+          0,
+          1,
+        ),
+      ),
+      $ease: cubic-bezier(0.01, 0.45, 0.25, 1.3),
+      $delay: 0.5s
+    );
+  }
+
+  &__contentItem {
+    @include option(margin, 0 auto 12px);
+    @include option(font-size, 16px);
+    @include option(line-height, 23px);
+    font-weight: 500;
+    white-space: pre-line;
+    color: $BLACK;
+    user-select: all;
+
+    &:last-child {
+      @include option(margin-bottom, 0);
+    }
+  }
+}

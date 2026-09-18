@@ -1,0 +1,16 @@
+@use "@styles/base" as *;
+
+.<%- className %> {
+  @mixin mod($mod) {
+    @include modifier("<%-className%>", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .<%-className%>_#{$mod} & {
+        @content;
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+@use "@styles/base" as *;
+
+.videoModal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  &__bg{
+    background-color: $BLACK;
+    opacity: 0.2;
+    z-index: 0;
+  };
+  &__content{
+    
+    z-index: 1;
+    position: relative;
+  }
+
+  @mixin mod($mod) {
+    @include modifier("videoModal", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .videoModal_#{$mod} & {
+        @content;
+      }
+    }
+  }
+}

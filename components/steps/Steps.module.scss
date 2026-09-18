@@ -1,0 +1,81 @@
+@use "@styles/base" as *;
+
+.steps {
+  @include content(1129px, 375px);
+  width: 100%;
+  &__bgItem{
+    &_circle{
+      @include options((
+        top: -149px,
+        left: 170px,
+        width: 190px,
+      ));
+      @include NOT-DESKTOP{
+        display: none;
+      }
+    }
+    &_sattelite{
+      @include options((
+        top: -175px,
+        left: 195px,
+        width: 210px,
+      ));
+      @include NOT-DESKTOP{
+        display: none;
+      }
+    }
+  }
+  &__content{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    @include options((
+      padding-top: (76px, 44px),
+      padding-bottom: (108px, 60px),
+    ));
+  }
+  &__title{
+    @extend %SUBTITLE;
+    color: $RED;
+    margin: 0
+  };
+  &__track{
+    position: relative;
+    @include options((
+        padding: (103px 10px 0 40px, 55px 10px 0), 
+    ));
+    @include option(gap, 50px, 20px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 0;
+    z-index: 1;
+    
+  } 
+
+  &__tracklines{
+    z-index: 0;
+    position: absolute;
+  }
+  &_trackline{
+    display: block;
+    width: 100%;
+  }
+  &__button{
+    @include option(margin-top, 81px, 178px);
+    align-self: center;
+  }
+
+  @mixin mod($mod) {
+    @include modifier("steps", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .steps_#{$mod} & {
+        @content;
+      }
+    }
+  }
+}

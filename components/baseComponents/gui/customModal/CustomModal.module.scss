@@ -1,0 +1,126 @@
+@use "sass:string";
+@use "sass:list";
+@use "sass:meta";
+
+@use "@styles/base" as *;
+
+.customModal {
+  @mixin modifier($class, $mod) {
+    $modTmp: string.unquote("");
+    @if meta.type-of($mod) == list {
+      @each $m in $mod {
+        $modTmp: $modTmp + string.unquote(".#{$class}_#{$m}");
+      }
+    } @else {
+      $modTmp: string.unquote(".#{$class}_#{$mod}");
+    }
+
+    //@debug list.nth(list.nth(&, 1), 1);
+    $first-class: split-pseudo-class(list.nth(list.nth(&, 1), 1));
+    @if list.length($first-class) > 1 {
+      @for $i from 2 through list.length($first-class) {
+        $modTmp: $modTmp + string.unquote("::") + list.nth($first-class, $i);
+      }
+    }
+
+    @if (list.nth($first-class, 1) != string.unquote(".#{$class}")) {
+      $modTmp: $modTmp + string.unquote(" &");
+    }
+
+    @at-root #{$modTmp} {
+      @content;
+    }
+  }
+  // Константы
+  @mixin mod($mod) {
+    @include modifier("customModal", $mod) {
+      @content;
+    }
+  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $z-modal;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  outline: 0;
+  pointer-events: none;
+
+  &__bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($BLACK, 0.8);
+    pointer-events: all;
+  }
+
+  &__container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+
+  &__block {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: auto;
+    margin: auto;
+    pointer-events: none;
+
+    @include mod("bottom") {
+      margin-bottom: 0;
+    }
+
+    @include mod("top") {
+      margin-top: 0;
+    }
+
+    @include mod("left") {
+      margin-left: 0;
+    }
+
+    @include mod("right") {
+      margin-right: 0;
+    }
+
+    @include mod("fullpage") {
+      flex-direction: column;
+      justify-content: flex-start;
+      max-width: 100%;
+      max-height: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  }
+
+  &__content {
+    border-radius: 30px;
+    @include options((
+      width: (749px, 300px),
+    ));
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    background-color: var(--modal-content-bg, #ffffff);
+    border: var(--modal-content-border, 1px solid);
+    outline: 0;
+    @include mod("fullpage") {
+      height: 100%;
+      width: 100%;
+      overflow: auto;
+    }
+  }
+}

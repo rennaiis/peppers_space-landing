@@ -1,0 +1,20 @@
+@use "@styles/base" as *;
+
+.parallaxScroll {
+  @mixin mod($mod) {
+    @include modifier("parallaxScroll", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .parallaxScroll _#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  &__path {
+    position: absolute;
+  }
+}

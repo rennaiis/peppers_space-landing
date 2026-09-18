@@ -1,0 +1,104 @@
+@use "@styles/base" as *;
+.boosters {
+  @mixin boosters($mod) {
+    @include modifier("boosters", $mod) {
+      @content;
+    }
+  }
+  @mixin item($mod) {
+    @include modifier("boosters__item", $mod) {
+      @content;
+    }
+  }
+  position: absolute;
+  @include option(bottom, 30px);
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @include option(width, 80px);
+    @include option(height, 80px);
+    @include option(margin, 0 8px);
+
+    // transition: .3s transform ease-in-out;
+
+    // &_active {
+    //   transform: scale(1.1);
+    // }
+  }
+
+  &__itemImage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    @include option(width, 72px);
+    @include option(height, 72px);
+    transition: opacity 0.3s ease-in-out;
+    img,
+    svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @include item("disable") {
+      opacity: 0.5;
+    }
+  }
+
+  &__itemBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.3s ease-in-out;
+
+    &_active {
+      opacity: 0;
+      filter: drop-shadow(0px 0px 8px $PURPLE);
+
+      @include item("active") {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__itemCount {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    @include option(bottom, -8px);
+    @include option(right, -8px);
+    @include option(padding, 1px 6px 0);
+    @include option(min-width, 24px);
+    @include option(height, 24px);
+    @include option(border-radius, 24px);
+    box-sizing: border-box;
+    @include option(font-size, 16px);
+    @include option(line-height, 22px);
+    font-weight: 700;
+    color: $WHITE;
+    background-color: rgba($PURPLE, 0.6);
+    text-shadow: 2px 2px 0 rgba(#2f085a, 0.2);
+  }
+
+  &__itemButton {
+    position: absolute;
+    @include option(bottom, -8px);
+    @include option(right, -8px);
+  }
+}

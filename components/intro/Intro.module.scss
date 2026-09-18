@@ -1,0 +1,229 @@
+@use "@styles/base" as *;
+
+.intro {
+  @mixin mod($mod) {
+    @include modifier("intro", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .intro_#{$mod} & {
+        @content;
+      }
+    }
+  }
+  @include content($CONTENT-W, 385px);
+  width: 100%;
+  background-color: rgb(31, 21, 72);
+
+  &__content{
+    display: flex;
+    flex-direction: column;
+    @include NOT-DESKTOP{
+      align-items: center;
+    };
+    @include options ((
+      box-sizing: border-box,
+      padding:(154px 0 174px, 471px 0px 26px),
+    ));
+  }
+  &__tv{
+    @include options((
+      margin-top: (14px, 13px)
+    ))
+  }
+ 
+  &__caption{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+
+
+    @include options((
+      gap: (10px)
+    ));
+    svg{
+      position: absolute;
+      display: none;
+      @include options((
+        width: (23px, 12px),
+        left: (-50px, -17px),
+      ))
+    }
+    
+    &_red{
+      @include options((
+        padding: (10px, 3px),
+        border-radius: (7px, 4px)
+      ));
+      background-color: $RED;
+      color: $WHITE;
+    }
+    &_white{
+      @include options((
+        padding: (12px 14px, 7px 7px),
+        border-radius: (7px, 4px)
+      ));
+      background-color: $WHITE;
+      color: $RED;
+    }
+    &_1{
+      @extend %BIG-TITLE;
+      @include option(margin-left, 0px, 10px);
+    }
+    &_2{
+      @extend %MEDIUM-TITLE;
+      svg{
+        @include option(margin-left, 14px, 0);
+        display: block;
+      };
+      @include options((
+        margin-top: (35px, 27px),
+        margin-left: (-16px, 20px)
+      ));
+    }
+    &_3{
+      @extend %TITLE;
+      @include options((
+        margin-top: (5px, 6px),
+        margin-left: (-2px, 24px)
+      ));
+      @include NOT-DESKTOP{
+        background-color: $WHITE;
+        color: $RED;
+        @include options((
+          padding: (10px, 1px 5px 1px 6px),
+          border-radius: (7px, 4px),
+          font-size: (32px),
+          letter-spacing: 0.01em
+        ));
+      }
+    }
+    &_4{
+      @extend %TITLE;
+      letter-spacing: 0.0020em;
+      font-weight: 800;
+      @include options((
+        font-size: (51.09px, 25px),
+        margin-top: (0px, 16px),
+        margin-left: (0px, 21px)
+      ));
+      @include NOT-DESKTOP{
+        font-weight: 700;
+        letter-spacing: 0.035em;
+        background-color: #00000000;
+        svg{
+          display: block;
+        }
+      }
+      @include NOT-MOB{
+        position: absolute;
+        @include options((
+          right: (180px), 
+          bottom: 42px,
+          padding-top: (7px, 3px)
+        ))
+      };
+    }
+    &_5{
+      @extend %TITLE;
+      letter-spacing: -0.01em;
+      @include options((
+          margin-top: (20px, 9px),
+          margin-left: (-2px, 23px),
+      ));
+      @include NOT-DESKTOP{
+        font-weight: 700;
+        letter-spacing: 0.02em
+      }
+      svg{
+        display: block;
+      }
+    }
+  }
+
+  &__bg{
+    display: flex;
+    flex-direction: row-reverse;
+    @include NOT-DESKTOP{
+      flex-direction: column;
+    }
+  }
+  &__picture{
+    position: relative;
+    height: 100%;
+    @include options((
+      width: (640px, 414px)
+    ));
+    flex-shrink: 0;
+  } 
+  &__redBg{
+    object-fit: contain;
+    img{
+      width: 100%;
+      height: 100%
+    }
+    width: 100%;
+    height: 100%;
+    @include NOT-DESKTOP{
+      position: absolute;
+      @include options((
+        height: 466px,
+        bottom: 0,
+      ));
+    }
+  };
+   &__bgItem{
+    overflow: hidden;
+    img{
+      object-fit: contain;
+    }
+    &_space{
+      width: 100%;
+    };
+    &_rocket{
+      width: 100%;
+      position: absolute;
+      inset: 0;
+      img{
+        @include option( width, 652px, 414px);
+      }
+      @include options((
+        bottom: (110px, 457px),
+        left: (0px, 0px)
+      ))
+    };
+    &_car{
+      position: absolute;
+      inset: 0;
+      margin-bottom: -80%;
+      @include options((
+        bottom: (-70px, 450px), 
+        left: (-20px, 76px)
+      ));
+      img{
+        @include option( width, 997px, 513px);
+      }
+    };
+    &_man{
+      position: absolute;
+      inset: 0;
+      @include options((
+        width: (482px, 284px),
+        left: (-184px, -50px),
+        bottom: (-380px, 234px),
+      ))
+      
+    };
+   };
+
+   &__button{
+    @include options((
+      margin-top: (48px, 23px), 
+    ));
+   }
+}
+ 

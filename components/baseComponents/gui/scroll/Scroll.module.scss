@@ -1,0 +1,62 @@
+@use "@styles/base" as *;
+
+.scroll {
+  @mixin mod($mod) {
+    @include modifier("scroll", $mod) {
+      @content;
+    }
+  }
+  @mixin mod-w($mod) {
+    @include modifier("scrollWrapper", $mod) {
+      @content;
+    }
+  }
+
+  min-height: 100%;
+  --track-width: 5px;
+  --track-border-radius: 0;
+
+  &__wrapper {
+    inset: 0 !important;
+  }
+
+  &__content {
+    padding: var(--scroll-content-padding, 0) !important;
+  }
+
+  &__track {
+  }
+
+  &__thumb {
+  }
+
+  &__shadow {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 50px;
+    transition: opacity 0.1s linear;
+    pointer-events: none;
+    &_top {
+      top: -2px;
+      background: linear-gradient(to bottom, rgba($WHITE, 1) 20%, rgba($WHITE, 0) 80%);
+      @include mod-w("info") {
+        background: linear-gradient(to bottom, rgba(#78867a, 0) 20%, rgba(#78867a, 0) 80%);
+      }
+    }
+    &_bottom {
+      bottom: -2px;
+      background: linear-gradient(to top, rgba($WHITE, 1) 20%, rgba($WHITE, 0) 80%);
+      @include mod-w("info") {
+        background: linear-gradient(to top, rgba(#78867a, 0) 20%, rgba(#78867a, 0) 80%);
+      }
+    }
+  }
+}
+
+.scrollWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex-grow: 1;
+}

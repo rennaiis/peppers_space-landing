@@ -1,0 +1,112 @@
+@use "@styles/base" as *;
+
+.gameLevels {
+  @mixin mod($mod) {
+    @include modifier("gameLevels", $mod) {
+      @content;
+    }
+  }
+  @mixin item($mod) {
+    @include modifier("gameLevels__item", $mod) {
+      @content;
+    }
+  }
+  @mixin mods($mods...) {
+    @each $mod in $mods {
+      .gameLevels_#{$mod} & {
+        @content;
+      }
+    }
+  }
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  @include option2(padding, 65px 15px 70px);
+  box-sizing: border-box;
+
+  &__toggle {
+    @include option2(margin, 22px 0 21px);
+  }
+
+  &__items {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__itemsBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    @include option2(gap, 6px);
+  }
+
+  &__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @include option2(width, 120px);
+    @include option2(height, 120px);
+    @include option2(border-radius, 5px);
+    background-color: #d9d9d9;
+    text-align: center;
+
+    &:before {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0;
+      @include option2(border-radius, 5px);
+      border: solid #7e7e7e;
+      @include option2(border-width, 3px);
+      transition: opacity 0.3s ease-in-out;
+      box-sizing: border-box;
+    }
+
+    @include item("active") {
+      background-color: #b4b4b4;
+
+      &:before {
+        opacity: 1;
+      }
+    }
+
+    @include item("inactive") {
+      background-color: #eaeaea;
+    }
+  }
+
+  &__itemImg {
+    @include option2(width, 72px);
+    @include option2(height, 72px);
+    @include option2(margin, 0 auto 4px);
+    object-fit: contain;
+
+    @include item("inactive") {
+      @include option2(width, 61px);
+      @include option2(height, 61px);
+      @include option2(margin, 0 auto 12px);
+    }
+    @include item("active") {
+      filter: contrast(15);
+    }
+  }
+
+  &__itemTitle {
+    font-family: $ZAR;
+    @include option2(font-size, 16px);
+  }
+}
